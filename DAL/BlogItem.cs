@@ -36,12 +36,14 @@ namespace DAL
 
         public string Source { get; set; }
 
-        public byte Rating { get; set; }
+        public float Rating { get; set; }
 
         public int RatingNumbers { get; set; }
 
         public int RatingSumm { get; set; }
 
         public string PhotoPath { get; set; }
+
+        public long LastModifiedUTC { get; set; }
     }
 }

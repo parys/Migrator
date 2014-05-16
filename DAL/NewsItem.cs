@@ -1,4 +1,5 @@
 ﻿using System;
+using DAL;
 
 namespace Common.Entities
 {
@@ -20,11 +21,11 @@ namespace Common.Entities
 
         public bool CanCommentary { get; set; }
 
-        public DateTime AdditionTime { get; set; }
+        public long AdditionTime { get; set; }
 
         public int NumberCommentaries { get; set; }
 
-        public int UserId { get; set; }
+        public User User { get; set; }
 
         public string Title { get; set; }
 
@@ -36,12 +37,14 @@ namespace Common.Entities
 
         public string Source { get; set; }
 
-        public byte Rating { get; set; }
+        public float Rating { get; set; }
 
         public int RatingNumbers { get; set; }
 
         public int RatingSumm { get; set; }
 
         public string PhotoPath { get; set; }
+
+        public long LastModifiedUTC { get; set; }
     }
 }

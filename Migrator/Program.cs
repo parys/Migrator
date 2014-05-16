@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using Common.Entities;
 using DAL;
 
 namespace Migrator
@@ -12,8 +13,11 @@ namespace Migrator
         static void Main(string[] args)
         {
             Program program = new Program();
-            program.UpdateUsers();
-         //   program.UpdateBlogItems();
+         //  program.UpdateUsers();
+        //   program.UpdateBlogItems();
+         //  program.UpdateNewsItems();
+
+            NewsItem n = UnitOfWork.NewsItemRepository.Get().Last();
 
         }
 
@@ -291,6 +295,7 @@ namespace Migrator
                         i++;
                     }
                     blogItem.Id = int.Parse(id);
+                    i++;
                     // Category id
                     string categoryId = null;
                     while (chars[i] != '|')
@@ -299,6 +304,7 @@ namespace Migrator
                         i++;
                     }
                     blogItem.CategoryId = int.Parse(categoryId);
+                    i++;
                     // year
                     string year = null;
                     while (chars[i] != '|')
@@ -307,6 +313,7 @@ namespace Migrator
                         i++;
                     }
                     blogItem.Year = int.Parse(year);
+                    i++;
                     // month
                     string month = null;
                     while (chars[i] != '|')
@@ -315,6 +322,7 @@ namespace Migrator
                         i++;
                     }
                     blogItem.Month = int.Parse(month);
+                    i++;
                     // day
                     string day = null;
                     while (chars[i] != '|')
@@ -323,6 +331,7 @@ namespace Migrator
                         i++;
                     }
                     blogItem.Day = int.Parse(day);
+                    i++;
                     // pending
                     while (chars[i] != '|')
                     {
@@ -330,6 +339,7 @@ namespace Migrator
                         blogItem.Pending = true;
                         i++;
                     }
+                    i++;
                     // onTop
                     while (chars[i] != '|')
                     {
@@ -337,6 +347,7 @@ namespace Migrator
                             blogItem.OnTop = true;
                         i++;
                     }
+                    i++;
                     //commentary_may
                     while (chars[i] != '|')
                     {
@@ -344,6 +355,7 @@ namespace Migrator
                             blogItem.CanCommentary = true;
                         i++;
                     }
+                    i++;
                     //add time
                     string addTime = null;
                     while (chars[i] != '|')
@@ -351,6 +363,7 @@ namespace Migrator
                         addTime += chars[i];
                         i++;
                     }
+                    i++;
                     blogItem.AdditionTime = long.Parse(addTime);
                     // commentary Number
                     string numberCommentary = null;
@@ -359,6 +372,7 @@ namespace Migrator
                         numberCommentary += chars[i];
                         i++;
                     }
+                    i++;
                     blogItem.NumberCommentaries = int.Parse(numberCommentary);
                     //author
                     string userName = null;
@@ -367,6 +381,8 @@ namespace Migrator
                         userName += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.User = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
                     //title
                     string title = null;
@@ -375,6 +391,8 @@ namespace Migrator
                         title += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.Title = title;
                     //brief
                     string brief = null;
@@ -383,6 +401,8 @@ namespace Migrator
                         brief += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.Brief = brief;
                     // message
                     string message = null;
@@ -391,6 +411,8 @@ namespace Migrator
                         message += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.Message = message;
                     // attach
                     while (chars[i] != '|')
@@ -398,19 +420,31 @@ namespace Migrator
                         id += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     // files
-                    while (chars[i] != '|')
+                    while (true)
                     {
-                        id += chars[i];
+                        if (chars[i] == '\\' && chars[i + 1] == '|' && chars[i + 2] == '|')
+                        {
+                            break;
+                        }
                         i++;
                     }
+                    i+=3;
+                    //i++;
+                    
                     // reads
                     string reads = null;
+                    
+                    
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.Reads = int.Parse(reads);
                     // rating
                     string rating = null;
@@ -419,7 +453,9 @@ namespace Migrator
                         rating += chars[i];
                         i++;
                     }
-                    blogItem.Rating = byte.Parse(rating);
+                    i++;
+                    
+                    blogItem.Rating = float.Parse(rating);
                     // rate_num
                     string ratingNumbers = null;
                     while (chars[i] != '|')
@@ -427,6 +463,8 @@ namespace Migrator
                         ratingNumbers += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.RatingNumbers = int.Parse(ratingNumbers);
                     // rate sum
                     string ratingSumm = null;
@@ -435,6 +473,8 @@ namespace Migrator
                         ratingSumm += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     blogItem.RatingSumm = int.Parse(ratingSumm);
                     //rate ip
                     while (chars[i] != '|')
@@ -442,69 +482,96 @@ namespace Migrator
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     // other 1
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
-                    // other 2
+                    i++;
+
+                    // other 2 SOURCE
+                    string source = null;
                     while (chars[i] != '|')
                     {
-                        reads += chars[i];
+                        source += chars[i];
                         i++;
                     }
+                    blogItem.Source = source;
+                    i++;
+                    
                     // other 3
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     // other 4
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+                    
                     // other 5
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+                    // other6
+                    while (chars[i] != '|')
+                    {
+                        // reads += chars[i];
+                        i++;
+                    }
+                    i++;
+
+                    // uid
+                    while (chars[i] != '|')
+                    {
+                       // reads += chars[i];
+                        i++;
+                    }
+                    i++;
+                    
+                    // subscr
+                    while (chars[i] != '|')
+                    {
+                       // reads += chars[i];
+                        i++;
+                    }
+                    i++;
+
                     // last modified
                     string lastDate = null;
-                    while (chars[i] != '|')
+                    while (char.IsDigit(chars[i]))// != '|' || chars[i] != '\\'))
                     {
                         lastDate += chars[i];
                         i++;
                     }
-                    // uid
-                    while (chars[i] != '|')
-                    {
-                        reads += chars[i];
-                        i++;
-                    }
-                    // subscr
-                    while (chars[i] != '|')
-                    {
-                        reads += chars[i];
-                        i++;
-                    }
-                 //   blogItem.LastModifiedUTC = long.Parse(lastDate);
-                  //  UnitOfWork.BlogItemRepository.Add(blogItem);
-                    while (chars[i] != 10)
-                    {
-                        i++;
-                    }
+                    //i++;
+
+                    blogItem.LastModifiedUTC = long.Parse(lastDate);
+                    UnitOfWork.BlogItemRepository.Add(blogItem);
+                   // while (chars[i] != 10)
+                  //  {
+                 //       i++;
+                  //  }
                 }
-                //UnitOfWork.Save();
+                UnitOfWork.Save();
             }
         }
 
         private void UpdateNewsItems()
         {
-            using (FileStream fs = new FileStream(@"C:\\news.txt", FileMode.Open))
+            using (FileStream fs = new FileStream(@"C:\news.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
@@ -512,7 +579,7 @@ namespace Migrator
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    BlogItem blogItem = new BlogItem();
+                    NewsItem newsItem = new NewsItem();
                     // id
                     string id = null;
                     while (chars[i] != '|')
@@ -520,7 +587,8 @@ namespace Migrator
                         id += chars[i];
                         i++;
                     }
-                    blogItem.Id = int.Parse(id);
+                    newsItem.Id = int.Parse(id);
+                    i++;
                     // Category id
                     string categoryId = null;
                     while (chars[i] != '|')
@@ -528,7 +596,8 @@ namespace Migrator
                         categoryId += chars[i];
                         i++;
                     }
-                    blogItem.CategoryId = int.Parse(categoryId);
+                    newsItem.CategoryId = int.Parse(categoryId);
+                    i++;
                     // year
                     string year = null;
                     while (chars[i] != '|')
@@ -536,7 +605,8 @@ namespace Migrator
                         year += chars[i];
                         i++;
                     }
-                    blogItem.Year = int.Parse(year);
+                    newsItem.Year = int.Parse(year);
+                    i++;
                     // month
                     string month = null;
                     while (chars[i] != '|')
@@ -544,7 +614,8 @@ namespace Migrator
                         month += chars[i];
                         i++;
                     }
-                    blogItem.Month = int.Parse(month);
+                    newsItem.Month = int.Parse(month);
+                    i++;
                     // day
                     string day = null;
                     while (chars[i] != '|')
@@ -552,28 +623,32 @@ namespace Migrator
                         day += chars[i];
                         i++;
                     }
-                    blogItem.Day = int.Parse(day);
+                    newsItem.Day = int.Parse(day);
+                    i++;
                     // pending
                     while (chars[i] != '|')
                     {
                         if (chars[i] == '1')
-                            blogItem.Pending = true;
+                            newsItem.Pending = true;
                         i++;
                     }
+                    i++;
                     // onTop
                     while (chars[i] != '|')
                     {
                         if (chars[i] == '1')
-                            blogItem.OnTop = true;
+                            newsItem.OnTop = true;
                         i++;
                     }
+                    i++;
                     //commentary_may
                     while (chars[i] != '|')
                     {
                         if (chars[i] == '1')
-                            blogItem.CanCommentary = true;
+                            newsItem.CanCommentary = true;
                         i++;
                     }
+                    i++;
                     //add time
                     string addTime = null;
                     while (chars[i] != '|')
@@ -581,7 +656,8 @@ namespace Migrator
                         addTime += chars[i];
                         i++;
                     }
-                    blogItem.AdditionTime = long.Parse(addTime);
+                    i++;
+                    newsItem.AdditionTime = long.Parse(addTime);
                     // commentary Number
                     string numberCommentary = null;
                     while (chars[i] != '|')
@@ -589,7 +665,8 @@ namespace Migrator
                         numberCommentary += chars[i];
                         i++;
                     }
-                    blogItem.NumberCommentaries = int.Parse(numberCommentary);
+                    i++;
+                    newsItem.NumberCommentaries = int.Parse(numberCommentary);
                     //author
                     string userName = null;
                     while (chars[i] != '|')
@@ -597,7 +674,9 @@ namespace Migrator
                         userName += chars[i];
                         i++;
                     }
-                    blogItem.User = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
+                    i++;
+
+                    newsItem.User = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
                     //title
                     string title = null;
                     while (chars[i] != '|')
@@ -605,7 +684,9 @@ namespace Migrator
                         title += chars[i];
                         i++;
                     }
-                    blogItem.Title = title;
+                    i++;
+
+                    newsItem.Title = title;
                     //brief
                     string brief = null;
                     while (chars[i] != '|')
@@ -613,7 +694,9 @@ namespace Migrator
                         brief += chars[i];
                         i++;
                     }
-                    blogItem.Brief = brief;
+                    i++;
+
+                    newsItem.Brief = brief;
                     // message
                     string message = null;
                     while (chars[i] != '|')
@@ -621,27 +704,41 @@ namespace Migrator
                         message += chars[i];
                         i++;
                     }
-                    blogItem.Message = message;
+                    i++;
+
+                    newsItem.Message = message;
                     // attach
                     while (chars[i] != '|')
                     {
                         id += chars[i];
                         i++;
                     }
+                    i++;
+
                     // files
-                    while (chars[i] != '|')
+                    while (true)
                     {
-                        id += chars[i];
+                        if (chars[i] == '\\' && chars[i + 1] == '|' && chars[i + 2] == '|')
+                        {
+                            break;
+                        }
                         i++;
                     }
+                    i += 3;
+                    //i++;
+
                     // reads
                     string reads = null;
+
+
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
-                    blogItem.Reads = int.Parse(reads);
+                    i++;
+
+                    newsItem.Reads = int.Parse(reads);
                     // rating
                     string rating = null;
                     while (chars[i] != '|')
@@ -649,7 +746,9 @@ namespace Migrator
                         rating += chars[i];
                         i++;
                     }
-                    blogItem.Rating = byte.Parse(rating);
+                    i++;
+
+                    newsItem.Rating = float.Parse(rating);
                     // rate_num
                     string ratingNumbers = null;
                     while (chars[i] != '|')
@@ -657,7 +756,9 @@ namespace Migrator
                         ratingNumbers += chars[i];
                         i++;
                     }
-                    blogItem.RatingNumbers = int.Parse(ratingNumbers);
+                    i++;
+
+                    newsItem.RatingNumbers = int.Parse(ratingNumbers);
                     // rate sum
                     string ratingSumm = null;
                     while (chars[i] != '|')
@@ -665,70 +766,99 @@ namespace Migrator
                         ratingSumm += chars[i];
                         i++;
                     }
-                    blogItem.RatingSumm = int.Parse(ratingSumm);
+                    i++;
+
+                    newsItem.RatingSumm = int.Parse(ratingSumm);
                     //rate ip
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+
                     // other 1
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
-                    // other 2
+                    i++;
+
+                    // other 2 SOURCE
+                    string source = null;
                     while (chars[i] != '|')
                     {
-                        reads += chars[i];
+                        source += chars[i];
                         i++;
                     }
+                    newsItem.Source = source;
+                    i++;
+
                     // other 3
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+
                     // other 4
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+
                     // other 5
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
+                    i++;
+                    // other6
+                    while (chars[i] != '|')
+                    {
+                        // reads += chars[i];
+                        i++;
+                    }
+                    i++;
+
+                    // uid
+                    while (chars[i] != '|')
+                    {
+                        // reads += chars[i];
+                        i++;
+                    }
+                    i++;
+
+                    // subscr
+                    while (chars[i] != '|')
+                    {
+                        // reads += chars[i];
+                        i++;
+                    }
+                    i++;
+
                     // last modified
                     string lastDate = null;
-                    while (chars[i] != '|')
+                    while (char.IsDigit(chars[i]))// != '|' || chars[i] != '\\'))
                     {
                         lastDate += chars[i];
                         i++;
                     }
-                    // uid
-                    while (chars[i] != '|')
-                    {
-                        reads += chars[i];
-                        i++;
-                    }
-                    // subscr
-                    while (chars[i] != '|')
-                    {
-                        reads += chars[i];
-                        i++;
-                    }
-                    //   blogItem.LastModifiedUTC = long.Parse(lastDate);
-                    //  UnitOfWork.BlogItemRepository.Add(blogItem);
-                    while (chars[i] != 10)
-                    {
-                        i++;
-                    }
+                    //i++;
+
+                    newsItem.LastModifiedUTC = long.Parse(lastDate);
+                    UnitOfWork.NewsItemRepository.Add(newsItem);
+                    // while (chars[i] != 10)
+                    //  {
+                    //       i++;
+                    //  }
                 }
-                //UnitOfWork.Save();
+                UnitOfWork.Save();
             }
         }
     }
