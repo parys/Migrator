@@ -1,4 +1,5 @@
 ﻿using Common.Entities;
+using DAL.models;
 
 namespace DAL
 {
@@ -26,7 +27,7 @@ namespace DAL
         /// <summary>
         /// Provides access to request repository.
         /// </summary>
-       /// IGenericRepository<Request> RequestRepository { get; }
+        IGenericRepository<BlogCategory> BlogCategoryRepository { get; }
 
         /// <summary>
         /// Provides access to aim repository.

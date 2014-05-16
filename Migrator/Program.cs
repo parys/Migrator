@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Common.Entities;
 using DAL;
+using DAL.models;
 
 namespace Migrator
 {
@@ -12,16 +13,16 @@ namespace Migrator
         private static readonly IUnitOfWork UnitOfWork = new UnitOfWork();
         static void Main(string[] args)
         {
-            Program program = new Program();
-         //  program.UpdateUsers();
-        //   program.UpdateBlogItems();
-         //  program.UpdateNewsItems();
+         //  UpdateUsers();
+        //   UpdateBlogItems();
+         //  UpdateNewsItems();
+            UpdateBlogCategory();
 
-            NewsItem n = UnitOfWork.NewsItemRepository.Get().Last();
+
 
         }
 
-        private void Example()
+        private static void Example()
         {
             using (FileStream fs = new FileStream(@"C:\\.txt", FileMode.Open))
             {
@@ -57,7 +58,7 @@ namespace Migrator
 
         }
 
-        private void UpdateUsers()
+        private static void UpdateUsers()
         {
             using (FileStream fs = new FileStream(@"C:\\users.txt", FileMode.Open))
             {
@@ -276,7 +277,7 @@ namespace Migrator
             }
         }
 
-        private void UpdateBlogItems()
+        private static void UpdateBlogItems()
         {
             using (FileStream fs = new FileStream(@"C:\\blog.txt", FileMode.Open))
             {
@@ -569,7 +570,7 @@ namespace Migrator
             }
         }
 
-        private void UpdateNewsItems()
+        private static void UpdateNewsItems()
         {
             using (FileStream fs = new FileStream(@"C:\news.txt", FileMode.Open))
             {
@@ -860,6 +861,73 @@ namespace Migrator
                 }
                 UnitOfWork.Save();
             }
+        }
+
+        private static void UpdateBlogCategory()
+        {
+            using (FileStream fs = new FileStream(@"C:\\bl_bl.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    BlogCategory blogCategory = new BlogCategory();
+                    // id
+                    string id = null;
+                    while (chars[i] != '|')
+                    {
+                        id += chars[i];
+                        i++;
+                    }
+                    i++;
+                    blogCategory.Id = int.Parse(id);
+                    // position
+                    string position = null;
+                    while (chars[i] != '|')
+                    {
+                        position += chars[i];
+                        i++;
+                    }
+                    i++;
+                    blogCategory.Position = int.Parse(position);
+                    // count
+                    string count = null;
+                    while (chars[i] != '|')
+                    {
+                        count += chars[i];
+                        i++;
+                    }
+                    i++;
+                    blogCategory.ItemsCount = int.Parse(count);
+
+                    // name
+                    while (chars[i] != '|')
+                    {
+                        blogCategory.Name += chars[i];
+                        i++;
+                    }
+                    i++;
+                    // description
+                    i++;
+                    // url
+                    if (chars[i] != '|')
+                    {
+                        while (chars[i] != '|')
+                        {
+                            blogCategory.UrlPath += chars[i];
+                            i++;
+                        }
+                    }
+                    i++;
+                   
+                    UnitOfWork.BlogCategoryRepository.Add(blogCategory);
+                    
+                }
+                UnitOfWork.Save();
+            }
+
         }
     }
 }

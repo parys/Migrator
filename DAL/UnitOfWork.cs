@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Entities;
+using DAL.models;
 
 namespace DAL
 {
@@ -14,7 +15,7 @@ namespace DAL
         private IGenericRepository<User> userRepository;
         private IGenericRepository<BlogItem> blogItemRepository;
         private IGenericRepository<NewsItem> newsItemRepository;
-     //   private IGenericRepository<Request> requestRepository;
+        private IGenericRepository<BlogCategory> blogCategoryRepository;
       //  private IGenericRepository<Aim> aimRepository;
        // private IGenericRepository<AimComment> aimUserCommentsRepository;
        // private IGenericRepository<AimPriority> aimPriorityRepository;
@@ -43,6 +44,15 @@ namespace DAL
             get {
                 return blogItemRepository ??
                        (blogItemRepository = new GenericRepository<BlogItem>(context));
+            }
+        }
+
+        public IGenericRepository<BlogCategory> BlogCategoryRepository
+        {
+            get
+            {
+                return blogCategoryRepository ??
+                       (blogCategoryRepository = new GenericRepository<BlogCategory>(context));
             }
         }
 
