@@ -17,7 +17,7 @@ namespace DAL
         private IGenericRepository<NewsItem> newsItemRepository;
         private IGenericRepository<BlogCategory> blogCategoryRepository;
         private IGenericRepository<NewsCategory> newsCategoryRepository;
-       // private IGenericRepository<AimComment> aimUserCommentsRepository;
+        private IGenericRepository<Comment> commentRepository;
        // private IGenericRepository<AimPriority> aimPriorityRepository;
        // private IGenericRepository<AimAchievementQuality> aimAchievementQualityRepository;
       //  private IGenericRepository<ReviewRequest> reviewRequestsRepository;
@@ -71,6 +71,11 @@ namespace DAL
         public IGenericRepository<NewsItem> NewsItemRepository
         {
             get { return newsItemRepository ?? (newsItemRepository = new GenericRepository<NewsItem>(context)); }
+        }
+
+        public IGenericRepository<Comment> CommentRepository
+        {
+            get { return commentRepository ?? (commentRepository = new GenericRepository<Comment>(context)); }
         }
 
         /// <summary>

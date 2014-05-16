@@ -17,8 +17,8 @@ namespace Migrator
         //   UpdateBlogItems();
          //  UpdateNewsItems();
          //   UpdateBlogCategory();
-            UpdateNewsCategory();
-
+         //   UpdateNewsCategory();
+            UpdateComments();
 
 
         }
@@ -989,6 +989,159 @@ namespace Migrator
                         i++;
                     }
                     UnitOfWork.NewsCategoryRepository.Add(newsCategory);
+                    
+                }
+                UnitOfWork.Save();
+            }
+        }
+
+        private static void UpdateComments()
+        {
+            using (FileStream fs = new FileStream(@"C:\\comments.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    Comment comment = new Comment();
+                    // id
+                    string id = null;
+                    while (chars[i] != '|')
+                    {
+                        id += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.Id = int.Parse(id);
+
+                    // module id
+                    string moduleId = null;
+                    while (chars[i] != '|')
+                    {
+                        moduleId += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.ModuleId = int.Parse(moduleId);
+                    //material id
+                    string materialId = null;
+                    while (chars[i] != '|')
+                    {
+                        materialId += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.MaterialId = int.Parse(materialId);
+                    // pending
+                    while (chars[i] != '|')
+                    {
+                        if (chars[i] == 1)
+                            comment.Pending = true;
+                        i++;
+                    }
+                    i++;
+                    // add time
+                    string additionTime = null;
+                    while (chars[i] != '|')
+                    {
+                        additionTime += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.AdditionTime = long.Parse(additionTime);
+                    //author
+                    string userName = null;
+                    while (chars[i] != '|')
+                    {
+                        userName += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.Author = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
+                    //name
+                    while (chars[i] != '|')
+                    {
+                       i++;
+                    }
+                    i++;
+                    //email
+                    while (chars[i] != '|')
+                    {
+                        i++;
+                    }
+                    i++;
+                    //www
+                    while (chars[i] != '|')
+                    {
+                        i++;
+                    }
+                    i++;
+                    //ip
+                    while (chars[i] != '|')
+                    {
+                        i++;
+                    }
+                    i++;
+                    // message
+                    string message = null;
+                    while (chars[i] != '|')
+                    {
+                        message += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.Message = message;
+                    // answer
+                    string answer = null;
+                    while (chars[i] != '|')
+                    {
+                        answer += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.Answer = answer;
+
+                    // user id
+                    string userId = null;
+                    while (chars[i] != '|')
+                    {
+                        userId += chars[i];
+                        i++;
+                    }
+                    i++;
+                    // parent id
+                    string parentId = null;
+                    while (chars[i] != '|')
+                    {
+                        parentId += chars[i];
+                        i++;
+                    }
+                    i++;
+                    comment.ParentCommentId = int.Parse(parentId);
+                    while (chars[i] != 10)
+                    {
+                        i++;
+                    }
+                    
+                    // user id
+                    //string rate = null;
+                    //while (chars[i] != '|')
+                    //{
+                    //    rate += chars[i];
+                    //    i++;
+                    //}
+                    //i++;
+                    //// rate
+                    //string rateId = null;
+                    //while (chars[i] != '|')
+                    //{
+                    //    rateId += chars[i];
+                    //    i++;
+                    //}
+                    //i++;
+                    UnitOfWork.CommentRepository.Add(comment);
                     
                 }
                 UnitOfWork.Save();

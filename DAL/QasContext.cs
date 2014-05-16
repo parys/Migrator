@@ -25,5 +25,7 @@ namespace DAL
         public DbSet<BlogCategory> BlogCategories { get; set; }
 
         public DbSet<NewsCategory> NewsCategories { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
     }
 }

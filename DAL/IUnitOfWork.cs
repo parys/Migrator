@@ -37,7 +37,7 @@ namespace DAL
         /// <summary>
         /// Provides access to aim user comment repository.
         /// </summary>
-       // IGenericRepository<AimComment> AimUserCommentRepository { get; }
+        IGenericRepository<Comment> CommentRepository { get; }
 
         /// <summary>
         /// Provides access to aim priority repository.
