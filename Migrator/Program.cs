@@ -16,7 +16,8 @@ namespace Migrator
          //  UpdateUsers();
         //   UpdateBlogItems();
          //  UpdateNewsItems();
-            UpdateBlogCategory();
+         //   UpdateBlogCategory();
+            UpdateNewsCategory();
 
 
 
@@ -921,13 +922,77 @@ namespace Migrator
                         }
                     }
                     i++;
-                   
+
                     UnitOfWork.BlogCategoryRepository.Add(blogCategory);
+
+                }
+                UnitOfWork.Save();
+            }
+        }
+
+        private static void UpdateNewsCategory()
+        {
+            using (FileStream fs = new FileStream(@"C:\\nw_nw.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    NewsCategory newsCategory = new NewsCategory();
+                    // id
+                    string id = null;
+                    while (chars[i] != '|')
+                    {
+                        id += chars[i];
+                        i++;
+                    }
+                    i++;
+                    newsCategory.Id = int.Parse(id);
+                    // position
+                    string position = null;
+                    while (chars[i] != '|')
+                    {
+                        position += chars[i];
+                        i++;
+                    }
+                    i++;
+                    newsCategory.Position = int.Parse(position);
+                    // count
+                    string count = null;
+                    while (chars[i] != '|')
+                    {
+                        count += chars[i];
+                        i++;
+                    }
+                    i++;
+                    newsCategory.ItemsCount = int.Parse(count);
+
+                    // name
+                    while (chars[i] != '|')
+                    {
+                        newsCategory.Name += chars[i];
+                        i++;
+                    }
+                    i++;
+                    
+                    // url
+                    if (chars[i] == '|')
+                    {
+                        i++;
+                        while (chars[i] != '|')
+                        {
+                            newsCategory.UrlPath += chars[i];
+                            i++;
+                        }
+                        i++;
+                    }
+                    UnitOfWork.NewsCategoryRepository.Add(newsCategory);
                     
                 }
                 UnitOfWork.Save();
             }
-
         }
     }
 }

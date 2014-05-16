@@ -32,7 +32,7 @@ namespace DAL
         /// <summary>
         /// Provides access to aim repository.
         /// </summary>
-      //  IGenericRepository<Aim> AimRepository { get; }
+        IGenericRepository<NewsCategory> NewsCategoryRepository { get; }
 
         /// <summary>
         /// Provides access to aim user comment repository.
