@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using Common.Entities;
 using DAL;
@@ -20,6 +21,7 @@ namespace Migrator
          //   UpdateNewsCategory();
            // UpdateComments();
           //  UpdateForumThemes();
+            UpdateForumSections();
 
         }
 
@@ -1298,25 +1300,108 @@ namespace Migrator
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    User user = new User();
-                    // login
-                    while (chars[i] != '|')
+                    if (chars[i + 2] == '0' || chars[i + 3] == '0')
                     {
-                        user.Login += chars[i];
+                        ForumSection forumSection = new ForumSection();
+                        string id = null;
+                        while (chars[i] != '|')
+                        {
+                            id += chars[i];
+                            i++;
+                        }
                         i++;
+                        forumSection.IdOld = int.Parse(id);
+                        // section id
+                        while (chars[i] != '|')
+                        {
+                            i++;
+                        }
+                        i++;
+                        // is section
+                        while (chars[i] != '|')
+                        {
+                            i++;
+                        }
+                        i++;
+                        // sequence
+                        while (chars[i] != '|')
+                        {
+                            i++;
+                        }
+                        i++;
+                        // time creation
+                        while (chars[i] != '|')
+                        {
+                            i++;
+                        }
+                        i++;
+                        // name
+                        while (chars[i] != '|')
+                        {
+                            forumSection.Name += chars[i];
+                            i++;
+                        }
+                        UnitOfWork.ForumSectionRepository.Add(forumSection);
+                        while (chars[i] != 10)
+                        {
+                            i++;
+                        }
                     }
-                    // last modified
-                    string lastDate = null;
-                    while (chars[i] != '|')
+                    else
                     {
-                        lastDate += chars[i];
+                        ForumSubsection forumSubsection = new ForumSubsection();
+                        // id
+                        string id = null;
+                        while (chars[i] != '|')
+                        {
+                            id += chars[i];
+                            i++;
+                        }
                         i++;
-                    }
-                    user.LastModifiedUTC = long.Parse(lastDate);
-                    UnitOfWork.UserRepository.Add(user);
-                    while (chars[i] != 10)
-                    {
+                        forumSubsection.IdOld = int.Parse(id);
+                        // section id
+                        string sectionId = null;
+                        while (chars[i] != '|')
+                        {
+                            sectionId += chars[i];
+                            i++;
+                        }
                         i++;
+
+                        forumSubsection.SectionId = int.Parse(sectionId);
+                        // is section
+                        while (chars[i] != '|')
+                        {
+                                i++;
+                        }
+                        i++;
+                        // sequence
+                        while (chars[i] != '|')
+                        {
+                                i++;
+                        }
+                        i++;
+                        // name 
+                        while (chars[i] != '|')
+                        {
+                            forumSubsection.Name += chars[i];
+                            i++;
+                        }
+                        i++;
+                        // description 
+                        while (chars[i] != '|')
+                        {
+                            forumSubsection.Description += chars[i];
+                            i++;
+                        }
+                        i++;
+                        // last modified
+                        
+                        UnitOfWork.ForumSubsectionRepository.Add(forumSubsection);
+                        while (chars[i] != 10)
+                        {
+                            i++;
+                        }
                     }
                 }
                 UnitOfWork.Save();

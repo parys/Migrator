@@ -12,12 +12,7 @@ namespace DAL.models
 
         public long IdOld { get; set; }
 
-        public long ForumId { get; set; }
+        public string Name { get; set; }
 
-        public bool IsPool { get; set; }
-
-        public bool OnTop { get; set; }
-
-        public bool LastPost { get; set; }
     }
 }

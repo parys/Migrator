@@ -52,7 +52,7 @@ namespace DAL
         /// <summary>
         /// Provides access to review repository.
         /// </summary>
-      //  IGenericRepository<Review> ReviewRepository { get; }
+        IGenericRepository<ForumSubsection> ForumSubsectionRepository { get; }
 
         /// <summary>
         /// Provides access to review requests repository.

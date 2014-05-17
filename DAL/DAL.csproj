@@ -91,6 +91,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Comment.cs" />
     <Compile Include="models\ForumSection.cs" />
+    <Compile Include="models\ForumSubsection.cs" />
     <Compile Include="models\ForumTheme.cs" />
     <Compile Include="models\NewsCategory.cs" />
     <Compile Include="models\NewsItem.cs" />

@@ -30,6 +30,8 @@ namespace DAL
 
         public DbSet<ForumSection> ForumSections { get; set; }
 
+        public DbSet<ForumSubsection> ForumSubsections { get; set; }
+
         public DbSet<ForumTheme> ForumThemes { get; set; }
     }
 }

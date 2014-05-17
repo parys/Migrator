@@ -20,7 +20,7 @@ namespace DAL
         private IGenericRepository<Comment> commentRepository;
         private IGenericRepository<ForumSection> forumSectionRepository;
         private IGenericRepository<ForumTheme> forumThemeRepository;
-      //  private IGenericRepository<ReviewRequest> reviewRequestsRepository;
+        private IGenericRepository<ForumSubsection> forumSubsectionRepository;
       //  private IGenericRepository<Review> reviewRepository;
       //  private IGenericRepository<Room> roomRepository;
       //  private IGenericRepository<Workplace> workplaceRepository;
@@ -86,6 +86,10 @@ namespace DAL
         public IGenericRepository<ForumTheme> ForumThemeRepository
         {
             get { return forumThemeRepository ?? (forumThemeRepository = new GenericRepository<ForumTheme>(context)); }
+        }
+        public IGenericRepository<ForumSubsection> ForumSubsectionRepository
+        {
+            get { return forumSubsectionRepository ?? (forumSubsectionRepository = new GenericRepository<ForumSubsection>(context)); }
         }
 
         /// <summary>
