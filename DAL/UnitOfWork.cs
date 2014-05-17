@@ -18,8 +18,8 @@ namespace DAL
         private IGenericRepository<BlogCategory> blogCategoryRepository;
         private IGenericRepository<NewsCategory> newsCategoryRepository;
         private IGenericRepository<Comment> commentRepository;
-       // private IGenericRepository<AimPriority> aimPriorityRepository;
-       // private IGenericRepository<AimAchievementQuality> aimAchievementQualityRepository;
+        private IGenericRepository<ForumSection> forumSectionRepository;
+        private IGenericRepository<ForumTheme> forumThemeRepository;
       //  private IGenericRepository<ReviewRequest> reviewRequestsRepository;
       //  private IGenericRepository<Review> reviewRepository;
       //  private IGenericRepository<Room> roomRepository;
@@ -76,6 +76,16 @@ namespace DAL
         public IGenericRepository<Comment> CommentRepository
         {
             get { return commentRepository ?? (commentRepository = new GenericRepository<Comment>(context)); }
+        }
+
+        public IGenericRepository<ForumSection> ForumSectionRepository
+        {
+            get { return forumSectionRepository ?? (forumSectionRepository = new GenericRepository<ForumSection>(context)); }
+        }
+        
+        public IGenericRepository<ForumTheme> ForumThemeRepository
+        {
+            get { return forumThemeRepository ?? (forumThemeRepository = new GenericRepository<ForumTheme>(context)); }
         }
 
         /// <summary>

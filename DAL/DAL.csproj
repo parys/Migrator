@@ -90,6 +90,8 @@
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="models\Comment.cs" />
+    <Compile Include="models\ForumSection.cs" />
+    <Compile Include="models\ForumTheme.cs" />
     <Compile Include="models\NewsCategory.cs" />
     <Compile Include="models\NewsItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

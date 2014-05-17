@@ -27,5 +27,9 @@ namespace DAL
         public DbSet<NewsCategory> NewsCategories { get; set; }
 
         public DbSet<Comment> Comments { get; set; }
+
+        public DbSet<ForumSection> ForumSections { get; set; }
+
+        public DbSet<ForumTheme> ForumThemes { get; set; }
     }
 }

@@ -18,8 +18,8 @@ namespace Migrator
          //  UpdateNewsItems();
          //   UpdateBlogCategory();
          //   UpdateNewsCategory();
-            UpdateComments();
-
+           // UpdateComments();
+          //  UpdateForumThemes();
 
         }
 
@@ -40,6 +40,14 @@ namespace Migrator
                         user.Login += chars[i];
                         i++;
                     }
+                    // gender
+                    while (chars[i] != '|')
+                    {
+                        if (chars[i] == 1)
+                            user.Gender = true;
+                        i++;
+                    }
+                    i++;
                     // last modified
                     string lastDate = null;
                     while (chars[i] != '|')
@@ -1143,6 +1151,173 @@ namespace Migrator
                     //i++;
                     UnitOfWork.CommentRepository.Add(comment);
                     
+                }
+                UnitOfWork.Save();
+            }
+        }
+
+        private static void UpdateForumThemes()
+        {
+            using (FileStream fs = new FileStream(@"C:\\forum.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    ForumTheme forumTheme = new ForumTheme();
+                    // id
+                    string id = null;
+                    while (chars[i] != '|')
+                    {
+                        id += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.IdOld = int.Parse(id);
+                    // section id
+                    string sectionId = null;
+                    while (chars[i] != '|')
+                    {
+                        sectionId += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.SectionId = int.Parse(sectionId);
+                    // isPoll
+                    while (chars[i] != '|')
+                    {
+                        if (chars[i] == '1')
+                            forumTheme.IsPool = true;
+                        i++;
+                    }
+                    i++;
+                    // on top
+                    while (chars[i] != '|')
+                    {
+                        if (chars[i] == '1')
+                            forumTheme.OnTop = true;
+                        i++;
+                    }
+                    i++;
+                    // last modified
+                    string lastDateMessage = null;
+                    while (chars[i] != '|')
+                    {
+                        lastDateMessage += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.LastMessageAdditionTime= long.Parse(lastDateMessage);
+                    // is CLosed
+                    while (chars[i] != '|')
+                    {
+                        if (chars[i] == '1')
+                            forumTheme.IsClosed = true;
+                        i++;
+                    }
+                    i++;
+                    // answers
+                    string answers = null;
+                    while (chars[i] != '|')
+                    {
+                        answers += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.Answers = int.Parse(answers);
+                    // views
+                    string views = null;
+                    while (chars[i] != '|')
+                    {
+                        views += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.Views = int.Parse(views);
+                    // name
+                    while (chars[i] != '|')
+                    {
+                        forumTheme.Name += chars[i];
+                        i++;
+                    }
+                    i++;
+                    // Description
+                    while (chars[i] != '|')
+                    {
+                        forumTheme.Description += chars[i];
+                        i++;
+                    }
+                    i++;
+                    // author
+                    string author = null;
+                    while (chars[i] != '|')
+                    {
+                        author += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.Author = UnitOfWork.UserRepository.Get(u => u.Login == author).FirstOrDefault();
+                    // user reg????
+                    while (chars[i] != '|')
+                    {
+                        //author += chars[i];
+                        i++;
+                    }
+                    i++;
+                    // author last answer
+                    string authorLastMessage = null;
+                    while (chars[i] != '|')
+                    {
+                        authorLastMessage += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumTheme.LastAnswerUser = UnitOfWork.UserRepository.Get(u => u.Login == authorLastMessage).FirstOrDefault();
+
+                    
+
+                    UnitOfWork.ForumThemeRepository.Add(forumTheme);
+                    while (chars[i] != 10)
+                    {
+                        i++;
+                    }
+                }
+                UnitOfWork.Save();
+            }
+        }
+
+        private static void UpdateForumSections()
+        {
+            using (FileStream fs = new FileStream(@"C:\\fr_fr.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    User user = new User();
+                    // login
+                    while (chars[i] != '|')
+                    {
+                        user.Login += chars[i];
+                        i++;
+                    }
+                    // last modified
+                    string lastDate = null;
+                    while (chars[i] != '|')
+                    {
+                        lastDate += chars[i];
+                        i++;
+                    }
+                    user.LastModifiedUTC = long.Parse(lastDate);
+                    UnitOfWork.UserRepository.Add(user);
+                    while (chars[i] != 10)
+                    {
+                        i++;
+                    }
                 }
                 UnitOfWork.Save();
             }

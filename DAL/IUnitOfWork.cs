@@ -42,12 +42,12 @@ namespace DAL
         /// <summary>
         /// Provides access to aim priority repository.
         /// </summary>
-      //  IGenericRepository<AimPriority> AimPriorityRepository { get; }
+        IGenericRepository<ForumSection> ForumSectionRepository { get; }
 
         /// <summary>
         /// Provides access to aim achievment quality repository.
         /// </summary>
-      //  IGenericRepository<AimAchievementQuality> AimAchievementQualityRepository { get; }
+        IGenericRepository<ForumTheme> ForumThemeRepository { get; }
 
         /// <summary>
         /// Provides access to review repository.
