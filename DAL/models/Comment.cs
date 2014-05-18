@@ -10,6 +10,8 @@ namespace DAL.models
     {
         public long Id { get; set; }
 
+        public int OldId { get; set; }
+
         public long ModuleId { get; set; }
 
         public long MaterialId { get; set; }

@@ -9,6 +9,7 @@ namespace DAL.models
     public class BlogCategory
     {
         public int Id { get; set; }
+        public int OldId { get; set; }
 
         public int Position { get; set; }
 

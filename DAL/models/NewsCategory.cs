@@ -10,6 +10,8 @@ namespace DAL.models
     {
         public int Id { get; set; }
 
+        public int OldId { get; set; }
+
         public int Position { get; set; }
 
         public int ItemsCount { get; set; }

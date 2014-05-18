@@ -5,7 +5,9 @@ namespace DAL
 {
     public class User
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
+
+        public int OldId { get; set; }
 
         public string Login { get; set; }
 

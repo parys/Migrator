@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Common.Entities;
 using DAL;
@@ -15,13 +16,15 @@ namespace Migrator
         static void Main(string[] args)
         {
          //  UpdateUsers();
-        //   UpdateBlogItems();
-         //  UpdateNewsItems();
-         //   UpdateBlogCategory();
-         //   UpdateNewsCategory();
-           // UpdateComments();
-          //  UpdateForumThemes();
-            UpdateForumSections();
+            UpdateUsersId();
+           //UpdateBlogItems();
+           //UpdateNewsItems();
+           //UpdateBlogCategory();
+           //UpdateNewsCategory();
+           //UpdateComments();
+           //UpdateForumThemes();
+           //UpdateForumSections();
+
 
         }
 
@@ -306,7 +309,7 @@ namespace Migrator
                         id += chars[i];
                         i++;
                     }
-                    blogItem.Id = int.Parse(id);
+                    blogItem.OldId = int.Parse(id);
                     i++;
                     // Category id
                     string categoryId = null;
@@ -599,7 +602,7 @@ namespace Migrator
                         id += chars[i];
                         i++;
                     }
-                    newsItem.Id = int.Parse(id);
+                    newsItem.OldId = int.Parse(id);
                     i++;
                     // Category id
                     string categoryId = null;
@@ -893,7 +896,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    blogCategory.Id = int.Parse(id);
+                    blogCategory.OldId = int.Parse(id);
                     // position
                     string position = null;
                     while (chars[i] != '|')
@@ -959,7 +962,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    newsCategory.Id = int.Parse(id);
+                    newsCategory.OldId = int.Parse(id);
                     // position
                     string position = null;
                     while (chars[i] != '|')
@@ -1024,7 +1027,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    comment.Id = int.Parse(id);
+                    comment.OldId = int.Parse(id);
 
                     // module id
                     string moduleId = null;
@@ -1406,6 +1409,50 @@ namespace Migrator
                 }
                 UnitOfWork.Save();
             }
+        }
+
+        private static void UpdateUsersId()
+        {
+            using (FileStream fs = new FileStream(@"C:\\ugen.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    
+                    // id
+                    string id = null;
+                    while (chars[i] != '|')
+                    {
+                        id += chars[i];
+                        i++;
+                    }
+                    i++;
+                    // login
+                    string userLogin = null;
+                    while (chars[i] != '|')
+                    {
+                        userLogin += chars[i];
+                        i++;
+                    }
+                    i++;
+                    User user = UnitOfWork.UserRepository.Get(u => u.Login == userLogin).First();
+                    if (user != null)
+                    {
+                        user.OldId = int.Parse(id);
+                        UnitOfWork.UserRepository.Update(user);
+                    }
+                  
+                    while (chars[i] != 10)
+                    {
+                        i++;
+                    }
+                }
+                UnitOfWork.Save();
+            }
+
         }
     }
 }
