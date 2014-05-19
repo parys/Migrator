@@ -15,15 +15,15 @@ namespace Migrator
         private static readonly IUnitOfWork UnitOfWork = new UnitOfWork();
         static void Main(string[] args)
         {
-         //  UpdateUsers();
+           UpdateUsers();
             UpdateUsersId();
-           //UpdateBlogItems();
-           //UpdateNewsItems();
-           //UpdateBlogCategory();
-           //UpdateNewsCategory();
-           //UpdateComments();
-           //UpdateForumThemes();
-           //UpdateForumSections();
+           UpdateBlogItems();
+           UpdateNewsItems();
+           UpdateBlogCategory();
+           UpdateNewsCategory();
+           UpdateComments();
+           UpdateForumThemes();
+           UpdateForumSections();
 
 
         }
