@@ -33,5 +33,7 @@ namespace DAL
         public DbSet<ForumSubsection> ForumSubsections { get; set; }
 
         public DbSet<ForumTheme> ForumThemes { get; set; }
+
+        public DbSet<ForumMessage> ForumMessages { get; set; }
     }
 }

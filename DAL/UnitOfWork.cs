@@ -21,7 +21,7 @@ namespace DAL
         private IGenericRepository<ForumSection> forumSectionRepository;
         private IGenericRepository<ForumTheme> forumThemeRepository;
         private IGenericRepository<ForumSubsection> forumSubsectionRepository;
-      //  private IGenericRepository<Review> reviewRepository;
+        private IGenericRepository<ForumMessage> forumMessageRepository;
       //  private IGenericRepository<Room> roomRepository;
       //  private IGenericRepository<Workplace> workplaceRepository;
       //  private IGenericRepository<StatisticsItem> statisticsItemRepository;
@@ -90,6 +90,10 @@ namespace DAL
         public IGenericRepository<ForumSubsection> ForumSubsectionRepository
         {
             get { return forumSubsectionRepository ?? (forumSubsectionRepository = new GenericRepository<ForumSubsection>(context)); }
+        }
+        public IGenericRepository<ForumMessage> ForumMessageRepository
+        {
+            get { return forumMessageRepository ?? (forumMessageRepository = new GenericRepository<ForumMessage>(context)); }
         }
 
         /// <summary>

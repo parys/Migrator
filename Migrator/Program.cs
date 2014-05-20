@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
 using System.Text;
 using Common.Entities;
 using DAL;
@@ -15,15 +13,16 @@ namespace Migrator
         private static readonly IUnitOfWork UnitOfWork = new UnitOfWork();
         static void Main(string[] args)
         {
-           UpdateUsers();
-            UpdateUsersId();
-           UpdateBlogItems();
-           UpdateNewsItems();
-           UpdateBlogCategory();
-           UpdateNewsCategory();
-           UpdateComments();
-           UpdateForumThemes();
-           UpdateForumSections();
+           //UpdateUsers();
+           // UpdateUsersId();
+           //UpdateBlogItems();
+           //UpdateNewsItems();
+           //UpdateBlogCategory();
+           //UpdateNewsCategory();
+           //UpdateComments();
+           //UpdateForumThemes();
+           //UpdateForumSections();
+            UpdateForumComments();
 
 
         }
@@ -1453,6 +1452,90 @@ namespace Migrator
                 UnitOfWork.Save();
             }
 
+        }
+
+        private static void UpdateForumComments()
+        {
+            using (FileStream fs = new FileStream(@"C:\\forump.txt", FileMode.Open))
+            {
+                byte[] data = new byte[fs.Length];
+                fs.Read(data, 0, Convert.ToInt32(fs.Length));
+
+                char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
+                for (int i = 0; i < chars.Length; i++)
+                {
+                    ForumMessage forumMessage = new ForumMessage();
+                    // id
+                    string id = null;
+                    while (chars[i] != '|')
+                    {
+                        id += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumMessage.OldId = int.Parse(id);
+
+                    // module id
+                    string moduleId = null;
+                    while (chars[i] != '|')
+                    {
+                        moduleId += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumMessage.ThemeId = int.Parse(moduleId);
+                    //material id
+                    string additionTime = null;
+                    while (chars[i] != '|')
+                    {
+                        additionTime += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumMessage.AdditionTimeUTC = long.Parse(additionTime);
+                    // pending
+                    while (chars[i] != '|')
+                    {
+                        if (chars[i] == 1)
+                            forumMessage.IsFirstMessage = true;
+                        i++;
+                    }
+                    i++;
+                    // message
+                    while (chars[i] != '|')
+                    {
+                        forumMessage.Message += chars[i];
+                        i++;
+                    }
+                    i++;
+                    //user is reg
+                    while (chars[i] != '|')
+                    {
+                        i++;
+                    }
+                    i++;
+                    //author
+                    string userName = null;
+                    while (chars[i] != '|')
+                    {
+                        userName += chars[i];
+                        i++;
+                    }
+                    i++;
+                    forumMessage.Author = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
+                    
+            
+                    while (chars[i] != 10)
+                    {
+                        i++;
+                    }
+
+                    UnitOfWork.ForumMessageRepository.Add(forumMessage);
+                    if (i > 10)
+                        break;
+                }
+                UnitOfWork.Save();
+            }
         }
     }
 }
