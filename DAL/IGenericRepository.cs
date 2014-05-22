@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace DAL
+namespace MyLiverpoolSite.DataAccessLayer
 {
     /// <summary>
     /// Mediator interface that acts as an abstraction layer between domain and data layer.

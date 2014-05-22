@@ -14,6 +14,8 @@ namespace DAL.models
 
         public long SectionId { get; set; }
 
+        public ForumSection ForumSection { get; set; }
+
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -25,6 +27,8 @@ namespace DAL.models
         public int Answers { get; set; }
 
         public int Views { get; set; }
+
+        public List<ForumTheme> ForumThemes { get; set; }
 
       //  public long LastMessageAdditionTime { get; set; }
 

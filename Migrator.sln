@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrator", "Migrator\Migrator.csproj", "{90AC141B-80ED-49FB-9411-9DDE85F8FCC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{9432816A-F394-4714-BA19-88A1604D5843}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLiverpoolSite.DataAccessLayer", "DAL\MyLiverpoolSite.DataAccessLayer.csproj", "{9432816A-F394-4714-BA19-88A1604D5843}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

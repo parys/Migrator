@@ -1,22 +1,18 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Web;
-using Common.Entities;
+﻿using System.Data.Entity;
+using MyLiverpoolSite.DataAccessLayer;
 
 namespace DAL
 {
     /// <summary>
     /// Database initializer.
     /// </summary>
-    internal class DatabaseInitializer : CreateDatabaseIfNotExists<QasContext>
+    internal class DatabaseInitializer : CreateDatabaseIfNotExists<LiverpoolContext>
     {
         /// <summary>
         /// Filling context.
         /// </summary>
         /// <param name="context">Qas contex.</param>
-        protected override void Seed(QasContext context)
+        protected override void Seed(LiverpoolContext context)
         {
          }
     }

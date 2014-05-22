@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL.models
 {
@@ -21,5 +18,7 @@ namespace DAL.models
         public string Description { get; set; }
 
         public string UrlPath { get; set; }
+
+        public List<NewsItem> NewsItems { get; set; } 
     }
 }

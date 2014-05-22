@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Policy;
+using DAL.models;
 
 namespace DAL
 {
@@ -11,7 +13,7 @@ namespace DAL
 
         public string Login { get; set; }
 
-       // public Hash Password { get; set; }
+        public string Password { get; set; }
 
         public string PhotoPath { get; set; }
 
@@ -40,6 +42,10 @@ namespace DAL
         public long LastModifiedUTC { get; set; }
 
         public string Title { get; set; }
+
+        public List<ForumMessage> ForumMessages { get; set; }
+
+        public List<Comment> Comments { get; set; }
 
     }
 }

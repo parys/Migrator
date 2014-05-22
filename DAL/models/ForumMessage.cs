@@ -8,6 +8,8 @@
 
         public int ThemeId { get; set; }
 
+        public ForumTheme ForumTheme { get; set; }
+
         public long AdditionTimeUTC { get; set; }
 
         public bool IsFirstMessage { get; set; }

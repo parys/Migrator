@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace DAL
+namespace MyLiverpoolSite.DataAccessLayer
 {
     /// <summary>
     /// Generic repository.
@@ -13,17 +13,17 @@ namespace DAL
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private QasContext context;
-        private DbSet<TEntity> dbSet;
+        private readonly LiverpoolContext _context;
+        private readonly DbSet<TEntity> _dbSet;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="context">Qas context.</param>
-        public GenericRepository(QasContext context)
+        public GenericRepository(LiverpoolContext context)
         {
-            this.context = context;
-            dbSet = context.Set<TEntity>();
+            this._context = context;
+            _dbSet = context.Set<TEntity>();
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace DAL
             Expression<Func<TEntity, bool>> filter = null,
             string includeProperties = null)
         {
-            IQueryable<TEntity> query = dbSet;
+            IQueryable<TEntity> query = _dbSet;
             if (filter != null)
             {
                 query = query.Where(filter);
@@ -59,7 +59,7 @@ namespace DAL
         /// <returns>Entity.</returns>
         public virtual TEntity GetById(object id)
         {
-            return dbSet.Find(id);
+            return _dbSet.Find(id);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace DAL
         /// <param name="entity">Entity to add.</param>
         public virtual void Add(TEntity entity)
         {
-            dbSet.Add(entity);
+            _dbSet.Add(entity);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace DAL
         /// <param name="id">Entity id.</param>
         public virtual void Delete(object id)
         {
-            Delete(dbSet.Find(id));
+            Delete(_dbSet.Find(id));
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace DAL
         /// <param name="entityToDelete">Entity to delete.</param>
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            if (_context.Entry(entityToDelete).State == EntityState.Detached)
             {
-                dbSet.Attach(entityToDelete);
+                _dbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+            _dbSet.Remove(entityToDelete);
         }
 
         /// <summary>
@@ -99,8 +99,8 @@ namespace DAL
         /// <param name="entityToUpdate">Entity to update.</param>
         public virtual void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            _dbSet.Attach(entityToUpdate);
+            _context.Entry(entityToUpdate).State = EntityState.Modified;
         }
     }
 }

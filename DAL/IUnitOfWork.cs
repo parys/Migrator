@@ -1,7 +1,7 @@
-﻿using Common.Entities;
+﻿using DAL;
 using DAL.models;
 
-namespace DAL
+namespace MyLiverpoolSite.DataAccessLayer
 {
     /// <summary>
     /// Maintains a list of repositories affected by a business transaction and coordinates 

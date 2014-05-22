@@ -48,9 +48,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\MyLiverpoolSite.DataAccessLayer.csproj">
       <Project>{9432816a-f394-4714-ba19-88a1604d5843}</Project>
-      <Name>DAL</Name>
+      <Name>MyLiverpoolSite.DataAccessLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DAL.models
 {
@@ -26,7 +22,7 @@ namespace DAL.models
 
         public string Answer { get; set; }
 
-       // public List<Comment> comments { get; set; } 
+        public List<Comment> Comments { get; set; } 
 
         public long ParentCommentId { get; set; }
 

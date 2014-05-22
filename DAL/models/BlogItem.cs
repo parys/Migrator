@@ -1,4 +1,4 @@
-﻿using System;
+﻿using DAL.models;
 
 namespace DAL
 {
@@ -9,6 +9,8 @@ namespace DAL
         public int OldId { get; set; }
 
         public int CategoryId { get; set; }
+
+        public BlogCategory BlogCategory { get; set; }
 
         public int Year { get; set; }
 

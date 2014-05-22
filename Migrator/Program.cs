@@ -2,9 +2,9 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using Common.Entities;
 using DAL;
 using DAL.models;
+using MyLiverpoolSite.DataAccessLayer;
 
 namespace Migrator
 {
@@ -13,20 +13,32 @@ namespace Migrator
         private static readonly IUnitOfWork UnitOfWork = new UnitOfWork();
         static void Main(string[] args)
         {
-           //UpdateUsers();
-           // UpdateUsersId();
-           //UpdateBlogItems();
-           //UpdateNewsItems();
-           //UpdateBlogCategory();
-           //UpdateNewsCategory();
-           //UpdateComments();
-           //UpdateForumThemes();
-           //UpdateForumSections();
-            UpdateForumComments();
-
-
+            //UpdateFromFiles();
+            var u = UnitOfWork.BlogItemRepository.Get().FirstOrDefault();
+            UpdateDb();
+            //u.
         }
 
+        public static void UpdateFromFiles()
+        {
+            UpdateUsers();
+            UpdateUsersId();
+            UpdateBlogItems();
+            UpdateNewsItems();
+            UpdateBlogCategory();
+            UpdateNewsCategory();
+            UpdateComments();
+            UpdateForumThemes();
+            UpdateForumSections();
+            UpdateForumComments();
+        }
+
+        public static void UpdateDb()
+        {
+            
+        }
+
+        #region Update from files to DB
         private static void Example()
         {
             using (FileStream fs = new FileStream(@"C:\\.txt", FileMode.Open))
@@ -1531,11 +1543,16 @@ namespace Migrator
                     }
 
                     UnitOfWork.ForumMessageRepository.Add(forumMessage);
-                    if (i > 10)
-                        break;
+
                 }
                 UnitOfWork.Save();
             }
         }
+
+        #endregion
+
+        #region UpdateDB
+            
+        #endregion
     }
 }

@@ -1,7 +1,4 @@
-﻿using System;
-using DAL;
-
-namespace Common.Entities
+﻿namespace DAL.models
 {
     public class NewsItem
     {
@@ -10,6 +7,8 @@ namespace Common.Entities
         public int OldId { get; set; }
 
         public int CategoryId { get; set; }
+
+        public NewsCategory NewsCategory { get; set; }
 
         public int Year { get; set; }
 

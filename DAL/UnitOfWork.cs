@@ -1,8 +1,9 @@
 ﻿using System;
-using Common.Entities;
+using DAL;
 using DAL.models;
+using MyLiverpoolSite.DataAccessLayer;
 
-namespace DAL
+namespace MyLiverpoolSite.DataAccessLayer
 {
     /// <summary>
     /// Maintains a list of repositories affected by a business transaction and coordinates 
@@ -10,7 +11,7 @@ namespace DAL
     /// </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly QasContext context = new QasContext();
+        private readonly LiverpoolContext context = new LiverpoolContext();
 
         private IGenericRepository<User> userRepository;
         private IGenericRepository<BlogItem> blogItemRepository;

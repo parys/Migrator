@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DAL.models
 {
@@ -13,6 +9,8 @@ namespace DAL.models
         public long IdOld { get; set; }
 
         public string Name { get; set; }
+
+        public List<ForumSubsection> ForumSubsections { get; set; }
 
     }
 }
