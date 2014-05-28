@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using DAL;
 using DAL.models;
@@ -13,10 +15,9 @@ namespace Migrator
         private static readonly IUnitOfWork UnitOfWork = new UnitOfWork();
         static void Main(string[] args)
         {
-            //UpdateFromFiles();
-            var u = UnitOfWork.BlogItemRepository.Get().FirstOrDefault();
+            var u = UnitOfWork.CommentRepository.Get(c => c.Comments.Count > 0);
+            // UpdateFromFiles();
             UpdateDb();
-            //u.
         }
 
         public static void UpdateFromFiles()
@@ -35,7 +36,13 @@ namespace Migrator
 
         public static void UpdateDb()
         {
-            
+            // UpdateBlogCategoryAndBlogItem();
+            // UpdateNewsCategoryAndNewsItem();
+            // UpdateCommentsLinks();
+            // UpdateCommentsForum();
+            //  UpdateForumSectionAndSubsection();
+           // UpdateForumSubSectionAndTheme();
+
         }
 
         #region Update from files to DB
@@ -280,14 +287,14 @@ namespace Migrator
                     i++;
                     // last modified
                     string lastDate = null;
-                    
+
                     while (chars[i] != '|')
                     {
                         if (char.IsDigit(chars[i]) && chars[i + 1] == '\\')
                         {
-                            i+=3;
+                            i += 3;
                         }
-                        
+
                         lastDate += chars[i];
                         i++;
                     }
@@ -362,7 +369,7 @@ namespace Migrator
                     while (chars[i] != '|')
                     {
                         if (chars[i] == '1')
-                        blogItem.Pending = true;
+                            blogItem.Pending = true;
                         i++;
                     }
                     i++;
@@ -408,7 +415,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.User = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
                     //title
                     string title = null;
@@ -418,7 +425,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.Title = title;
                     //brief
                     string brief = null;
@@ -428,7 +435,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.Brief = brief;
                     // message
                     string message = null;
@@ -438,7 +445,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.Message = message;
                     // attach
                     while (chars[i] != '|')
@@ -447,7 +454,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     // files
                     while (true)
                     {
@@ -457,20 +464,20 @@ namespace Migrator
                         }
                         i++;
                     }
-                    i+=3;
+                    i += 3;
                     //i++;
-                    
+
                     // reads
                     string reads = null;
-                    
-                    
+
+
                     while (chars[i] != '|')
                     {
                         reads += chars[i];
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.Reads = int.Parse(reads);
                     // rating
                     string rating = null;
@@ -480,7 +487,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.Rating = float.Parse(rating);
                     // rate_num
                     string ratingNumbers = null;
@@ -490,7 +497,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.RatingNumbers = int.Parse(ratingNumbers);
                     // rate sum
                     string ratingSumm = null;
@@ -500,7 +507,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     blogItem.RatingSumm = int.Parse(ratingSumm);
                     //rate ip
                     while (chars[i] != '|')
@@ -509,7 +516,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     // other 1
                     while (chars[i] != '|')
                     {
@@ -527,7 +534,7 @@ namespace Migrator
                     }
                     blogItem.Source = source;
                     i++;
-                    
+
                     // other 3
                     while (chars[i] != '|')
                     {
@@ -535,7 +542,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     // other 4
                     while (chars[i] != '|')
                     {
@@ -543,7 +550,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     // other 5
                     while (chars[i] != '|')
                     {
@@ -562,15 +569,15 @@ namespace Migrator
                     // uid
                     while (chars[i] != '|')
                     {
-                       // reads += chars[i];
+                        // reads += chars[i];
                         i++;
                     }
                     i++;
-                    
+
                     // subscr
                     while (chars[i] != '|')
                     {
-                       // reads += chars[i];
+                        // reads += chars[i];
                         i++;
                     }
                     i++;
@@ -586,10 +593,10 @@ namespace Migrator
 
                     blogItem.LastModifiedUTC = long.Parse(lastDate);
                     UnitOfWork.BlogItemRepository.Add(blogItem);
-                   // while (chars[i] != 10)
-                  //  {
-                 //       i++;
-                  //  }
+                    // while (chars[i] != 10)
+                    //  {
+                    //       i++;
+                    //  }
                 }
                 UnitOfWork.Save();
             }
@@ -1000,7 +1007,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
                     // url
                     if (chars[i] == '|')
                     {
@@ -1013,7 +1020,7 @@ namespace Migrator
                         i++;
                     }
                     UnitOfWork.NewsCategoryRepository.Add(newsCategory);
-                    
+
                 }
                 UnitOfWork.Save();
             }
@@ -1087,7 +1094,7 @@ namespace Migrator
                     //name
                     while (chars[i] != '|')
                     {
-                       i++;
+                        i++;
                     }
                     i++;
                     //email
@@ -1148,7 +1155,7 @@ namespace Migrator
                     {
                         i++;
                     }
-                    
+
                     // user id
                     //string rate = null;
                     //while (chars[i] != '|')
@@ -1166,7 +1173,7 @@ namespace Migrator
                     //}
                     //i++;
                     UnitOfWork.CommentRepository.Add(comment);
-                    
+
                 }
                 UnitOfWork.Save();
             }
@@ -1225,7 +1232,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    forumTheme.LastMessageAdditionTime= long.Parse(lastDateMessage);
+                    forumTheme.LastMessageAdditionTime = long.Parse(lastDateMessage);
                     // is CLosed
                     while (chars[i] != '|')
                     {
@@ -1292,7 +1299,7 @@ namespace Migrator
                     i++;
                     forumTheme.LastAnswerUser = UnitOfWork.UserRepository.Get(u => u.Login == authorLastMessage).FirstOrDefault();
 
-                    
+
 
                     UnitOfWork.ForumThemeRepository.Add(forumTheme);
                     while (chars[i] != 10)
@@ -1386,13 +1393,13 @@ namespace Migrator
                         // is section
                         while (chars[i] != '|')
                         {
-                                i++;
+                            i++;
                         }
                         i++;
                         // sequence
                         while (chars[i] != '|')
                         {
-                                i++;
+                            i++;
                         }
                         i++;
                         // name 
@@ -1410,7 +1417,7 @@ namespace Migrator
                         }
                         i++;
                         // last modified
-                        
+
                         UnitOfWork.ForumSubsectionRepository.Add(forumSubsection);
                         while (chars[i] != 10)
                         {
@@ -1432,7 +1439,7 @@ namespace Migrator
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    
+
                     // id
                     string id = null;
                     while (chars[i] != '|')
@@ -1455,7 +1462,7 @@ namespace Migrator
                         user.OldId = int.Parse(id);
                         UnitOfWork.UserRepository.Update(user);
                     }
-                  
+
                     while (chars[i] != 10)
                     {
                         i++;
@@ -1535,8 +1542,8 @@ namespace Migrator
                     }
                     i++;
                     forumMessage.Author = UnitOfWork.UserRepository.Get(u => u.Login == userName).FirstOrDefault();
-                    
-            
+
+
                     while (chars[i] != 10)
                     {
                         i++;
@@ -1552,7 +1559,124 @@ namespace Migrator
         #endregion
 
         #region UpdateDB
-            
+        public static void UpdateBlogCategoryAndBlogItem()
+        {
+            var blogCategories = UnitOfWork.BlogCategoryRepository.Get().ToList();
+            var blogs = UnitOfWork.BlogItemRepository.Get().ToList();
+            foreach (var blogCategory in blogCategories)
+            {
+                if (blogCategory.BlogItems == null)
+                {
+                    blogCategory.BlogItems = new List<BlogItem>();
+                }
+                foreach (var blog in blogs.Where(blog => blog.CategoryId == blogCategory.Id))
+                {
+                    blog.BlogCategory = blogCategory;
+                    blogCategory.BlogItems.Add(blog);
+                }
+            }
+            UnitOfWork.Save();
+        }
+
+        public static void UpdateNewsCategoryAndNewsItem()
+        {
+            var newsCategories = UnitOfWork.NewsCategoryRepository.Get().ToList();
+            var news = UnitOfWork.NewsItemRepository.Get().ToList();
+            foreach (var newsCategory in newsCategories)
+            {
+                if (newsCategory.NewsItems == null)
+                {
+                    newsCategory.NewsItems = new List<NewsItem>();
+                }
+                foreach (var newss in news.Where(newss => newss.CategoryId == newsCategory.Id))
+                {
+                    newss.NewsCategory = newsCategory;
+                    newsCategory.NewsItems.Add(newss);
+                }
+            }
+            UnitOfWork.Save();
+        }
+
+        public static void UpdateCommentsLinks()
+        {
+            var comments = UnitOfWork.CommentRepository.Get(c => c.ParentCommentId != 0).ToList();
+            foreach (var comment in comments)
+            {
+                var parentComment = UnitOfWork.CommentRepository.GetById(comment.ParentCommentId);
+
+                if (parentComment == null) continue;
+                if (parentComment.Comments == null)
+                {
+                    parentComment.Comments = new List<Comment>();
+                }
+                parentComment.Comments.Add(comment);
+                break;
+            }
+            UnitOfWork.Save();
+        }
+
+        public static void UpdateCommentsForum()
+        {
+            var posts = UnitOfWork.ForumMessageRepository.Get();
+            var themes = UnitOfWork.ForumThemeRepository.Get();
+            foreach (var theme in themes)
+            {
+                foreach (var post in posts.Where(post => theme.Id == post.ThemeId))
+                {
+                    post.ForumTheme = theme;
+                    if (theme.ForumMessages == null)
+                    {
+                        theme.ForumMessages = new List<ForumMessage>();
+                    }
+                    theme.ForumMessages.Add(post);
+                }
+            }
+            UnitOfWork.Save();
+        }
+
+        public static void UpdateForumSectionAndSubsection()
+        {
+            var sections = UnitOfWork.ForumSectionRepository.Get();
+            var subSections = UnitOfWork.ForumSubsectionRepository.Get();
+            foreach (var section in sections)
+            {
+                foreach (var subSection in subSections)
+                {
+                    if (subSection.SectionId == section.Id)
+                    {
+                        subSection.ForumSection = section;
+                        if (section.ForumSubsections == null)
+                        {
+                            section.ForumSubsections = new List<ForumSubsection>();
+                        }
+                        section.ForumSubsections.Add(subSection);
+                    }
+                }
+            }
+            UnitOfWork.Save();
+
+        }
+
+        public static void UpdateForumSubSectionAndTheme()
+        {
+            var themes = UnitOfWork.ForumThemeRepository.Get();
+            var subSections = UnitOfWork.ForumSubsectionRepository.Get();
+
+            foreach (var subSection in subSections)
+            {
+                foreach (var theme in themes.Where(theme => subSection.Id == theme.SectionId))
+                {
+                    theme.ForumSubsection = subSection;
+                    if (subSection.ForumThemes == null)
+                    {
+                        subSection.ForumThemes = new List<ForumTheme>();
+                    }
+                    subSection.ForumThemes.Add(theme);
+                }
+            }
+            UnitOfWork.Save();
+        }
+
         #endregion
     }
 }

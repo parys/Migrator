@@ -13,8 +13,8 @@ namespace MyLiverpoolSite.DataAccessLayer
             //: base(@"Data Source=KAPITANCHIKA\SQLEXPRESS;Initial Catalog=LiverpoolDatabase1;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
           //  : base("Data Source=KAPITANCHIKA\\SQLEXPRESS;Initial Catalog=MyLiverpoolSite.DataAccessLayer.LiverpoolContext;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
         {
-           // Database.SetInitializer<LiverpoolContext>(null);
-            Database.SetInitializer(new DatabaseInitializer());
+            Database.SetInitializer<LiverpoolContext>(null);
+           // Database.SetInitializer(new DatabaseInitializer());
         }
 
 
