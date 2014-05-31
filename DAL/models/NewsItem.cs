@@ -1,4 +1,6 @@
-﻿namespace DAL.models
+﻿using System.Collections.Generic;
+
+namespace DAL.models
 {
     public class NewsItem
     {
@@ -47,5 +49,7 @@
         public string PhotoPath { get; set; }
 
         public long LastModifiedUTC { get; set; }
+
+        public List<NewsComment> Comments { get; set; } 
     }
 }

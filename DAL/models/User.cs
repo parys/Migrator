@@ -45,7 +45,9 @@ namespace DAL
 
         public List<ForumMessage> ForumMessages { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public List<BlogComment> BlogComments { get; set; }
+
+        public List<NewsComment> NewsComments { get; set; }
 
     }
 }

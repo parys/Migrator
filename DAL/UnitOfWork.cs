@@ -1,7 +1,6 @@
 ﻿using System;
 using DAL;
 using DAL.models;
-using MyLiverpoolSite.DataAccessLayer;
 
 namespace MyLiverpoolSite.DataAccessLayer
 {
@@ -18,7 +17,8 @@ namespace MyLiverpoolSite.DataAccessLayer
         private IGenericRepository<NewsItem> newsItemRepository;
         private IGenericRepository<BlogCategory> blogCategoryRepository;
         private IGenericRepository<NewsCategory> newsCategoryRepository;
-        private IGenericRepository<Comment> commentRepository;
+        private IGenericRepository<BlogComment> blogCommentRepository;
+        private IGenericRepository<NewsComment> newsCommentRepository;
         private IGenericRepository<ForumSection> forumSectionRepository;
         private IGenericRepository<ForumTheme> forumThemeRepository;
         private IGenericRepository<ForumSubsection> forumSubsectionRepository;
@@ -74,10 +74,15 @@ namespace MyLiverpoolSite.DataAccessLayer
             get { return newsItemRepository ?? (newsItemRepository = new GenericRepository<NewsItem>(context)); }
         }
 
-        public IGenericRepository<Comment> CommentRepository
+        public IGenericRepository<BlogComment> BlogCommentRepository
         {
-            get { return commentRepository ?? (commentRepository = new GenericRepository<Comment>(context)); }
+            get { return blogCommentRepository ?? (blogCommentRepository = new GenericRepository<BlogComment>(context)); }
         }
+        public IGenericRepository<NewsComment> NewsCommentRepository
+        {
+            get { return newsCommentRepository ?? (newsCommentRepository = new GenericRepository<NewsComment>(context)); }
+        }
+
 
         public IGenericRepository<ForumSection> ForumSectionRepository
         {

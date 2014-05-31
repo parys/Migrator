@@ -2,13 +2,11 @@
 
 namespace DAL.models
 {
-    public class Comment
+    public class BlogComment
     {
         public long Id { get; set; }
 
         public int OldId { get; set; }
-
-        public long ModuleId { get; set; }
 
         public long MaterialId { get; set; }
 
@@ -22,9 +20,10 @@ namespace DAL.models
 
         public string Answer { get; set; }
 
-        public List<Comment> Comments { get; set; } 
+        public List<BlogComment> Comments { get; set; } 
 
         public long ParentCommentId { get; set; }
 
+        public BlogItem BlogItem { get; set; }
     }
 }

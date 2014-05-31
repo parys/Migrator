@@ -34,10 +34,10 @@ namespace MyLiverpoolSite.DataAccessLayer
         /// </summary>
         IGenericRepository<NewsCategory> NewsCategoryRepository { get; }
 
-        /// <summary>
-        /// Provides access to aim user comment repository.
-        /// </summary>
-        IGenericRepository<Comment> CommentRepository { get; }
+
+        IGenericRepository<BlogComment> BlogCommentRepository { get; }
+
+        IGenericRepository<NewsComment> NewsCommentRepository { get; }
 
         /// <summary>
         /// Provides access to aim priority repository.

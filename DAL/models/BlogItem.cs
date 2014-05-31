@@ -1,4 +1,5 @@
-﻿using DAL.models;
+﻿using System.Collections.Generic;
+using DAL.models;
 
 namespace DAL
 {
@@ -49,5 +50,7 @@ namespace DAL
         public string PhotoPath { get; set; }
 
         public long LastModifiedUTC { get; set; }
+
+        public List<BlogComment> Comments { get; set; } 
     }
 }
