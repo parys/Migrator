@@ -15,7 +15,7 @@ namespace Migrator
         static void Main(string[] args)
         {
             
-            // UpdateFromFiles();
+             UpdateFromFiles();
             // UpdateDb();
             
         }
@@ -23,15 +23,15 @@ namespace Migrator
         public static void UpdateFromFiles()
         {
             UpdateUsers();
-            UpdateUsersId();
-            UpdateBlogItems();
-            UpdateNewsItems();
-            UpdateBlogCategory();
-            UpdateNewsCategory();
-            UpdateComments();
-            UpdateForumThemes();
-            UpdateForumSections();
-            UpdateForumComments();
+            //UpdateUsersId();
+            //UpdateBlogItems();
+            //UpdateNewsItems();
+            //UpdateBlogCategory();
+            //UpdateNewsCategory();
+            //UpdateComments();
+            //UpdateForumThemes();
+            //UpdateForumSections();
+            //UpdateForumComments();
         }
 
         public static void UpdateDb()
