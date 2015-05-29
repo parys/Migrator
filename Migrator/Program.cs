@@ -12,26 +12,28 @@ namespace Migrator
     class Program
     {
         private static readonly IUnitOfWork UnitOfWork = new UnitOfWork();
+        private static string path = @"";
+        private static int maxChars = 10000;
+        private static bool useLimit = true;
+
         static void Main(string[] args)
         {
-            
-             UpdateFromFiles();
-            // UpdateDb();
-            
+            UpdateFromFiles();
+            UpdateDb();
         }
 
         public static void UpdateFromFiles()
         {
             UpdateUsers();
-            //UpdateUsersId();
-            //UpdateBlogItems();
-            //UpdateNewsItems();
-            //UpdateBlogCategory();
-            //UpdateNewsCategory();
-            //UpdateComments();
-            //UpdateForumThemes();
-            //UpdateForumSections();
-            //UpdateForumComments();
+            UpdateUsersId();
+            UpdateBlogItems();
+            UpdateNewsItems();
+            UpdateBlogCategory();
+            UpdateNewsCategory();
+            UpdateComments();
+            UpdateForumThemes();
+            UpdateForumSections();
+            UpdateForumComments();
         }
 
         public static void UpdateDb()
@@ -41,7 +43,7 @@ namespace Migrator
             UpdateCommentsForum();
             UpdateForumSectionAndSubsection();
             UpdateForumSubSectionAndTheme();
-            UpdateComments();
+            //UpdateComments();
             UpdateCommentsLinks();
             UpdateCommentsLinksToNewsAndBlogs();
 
@@ -50,7 +52,8 @@ namespace Migrator
         #region Update from files to DB
         private static void Example()
         {
-            using (FileStream fs = new FileStream(@"C:\\.txt", FileMode.Open))
+            Console.WriteLine("Start ");
+            using (FileStream fs = new FileStream(path + path + ".txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
@@ -94,13 +97,19 @@ namespace Migrator
 
         private static void UpdateUsers()
         {
-            using (FileStream fs = new FileStream(@"C:\\users.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateUsers");
+            using (FileStream fs = new FileStream(path + @"users.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     User user = new User();
                     // login
@@ -313,13 +322,19 @@ namespace Migrator
 
         private static void UpdateBlogItems()
         {
-            using (FileStream fs = new FileStream(@"C:\\blog.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateBlogItems");
+            using (FileStream fs = new FileStream(path + "blog.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     BlogItem blogItem = new BlogItem();
                     // id
@@ -606,13 +621,19 @@ namespace Migrator
 
         private static void UpdateNewsItems()
         {
+            Console.WriteLine("Start UpdateNewsItems");
             using (FileStream fs = new FileStream(@"C:\news.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     NewsItem newsItem = new NewsItem();
                     // id
@@ -899,13 +920,19 @@ namespace Migrator
 
         private static void UpdateBlogCategory()
         {
-            using (FileStream fs = new FileStream(@"C:\\bl_bl.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateBlogCategory");
+            using (FileStream fs = new FileStream(path + "bl_bl.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     BlogCategory blogCategory = new BlogCategory();
                     // id
@@ -965,13 +992,19 @@ namespace Migrator
 
         private static void UpdateNewsCategory()
         {
-            using (FileStream fs = new FileStream(@"C:\\nw_nw.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateNewsCategory");
+            using (FileStream fs = new FileStream(path + "nw_nw.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     NewsCategory newsCategory = new NewsCategory();
                     // id
@@ -1030,15 +1063,21 @@ namespace Migrator
 
         private static void UpdateComments()
         {
-            using (FileStream fs = new FileStream(@"C:\\comments.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateComments");
+            using (FileStream fs = new FileStream(path + "comments.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
                 {
-                   
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
+                {
+
                     // id
                     string id = null;
                     while (chars[i] != '|')
@@ -1047,7 +1086,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                  
+
                     // module id
                     string moduleId = null;
                     while (chars[i] != '|')
@@ -1057,8 +1096,8 @@ namespace Migrator
                     }
                     i++;
                     var ModuleId = int.Parse(moduleId);
-                    
-                  
+
+
                     //material id
                     string materialId = null;
                     while (chars[i] != '|')
@@ -1067,9 +1106,9 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                 
+
                     // pending
-                    char pending ='0';
+                    char pending = '0';
                     while (chars[i] != '|')
                     {
                         pending = chars[i];
@@ -1084,7 +1123,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                  
+
                     //author
                     string userName = null;
                     while (chars[i] != '|')
@@ -1093,7 +1132,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-               
+
                     //name
                     while (chars[i] != '|')
                     {
@@ -1126,7 +1165,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-        
+
                     // answer
                     string answer = null;
                     while (chars[i] != '|')
@@ -1135,7 +1174,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    
+
 
                     // user id
                     string userId = null;
@@ -1153,7 +1192,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                  
+
                     while (chars[i] != 10)
                     {
                         i++;
@@ -1210,13 +1249,19 @@ namespace Migrator
 
         private static void UpdateForumThemes()
         {
-            using (FileStream fs = new FileStream(@"C:\\forum.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateForumThemes");
+            using (FileStream fs = new FileStream(path + "forum.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     ForumTheme forumTheme = new ForumTheme();
                     // id
@@ -1342,13 +1387,19 @@ namespace Migrator
 
         private static void UpdateForumSections()
         {
-            using (FileStream fs = new FileStream(@"C:\\fr_fr.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateForumSections");
+            using (FileStream fs = new FileStream(path + "fr_fr.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     if (chars[i + 2] == '0' || chars[i + 3] == '0')
                     {
@@ -1460,13 +1511,19 @@ namespace Migrator
 
         private static void UpdateUsersId()
         {
-            using (FileStream fs = new FileStream(@"C:\\ugen.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateUsersId");
+            using (FileStream fs = new FileStream(path + "ugen.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
 
                     // id
@@ -1504,13 +1561,19 @@ namespace Migrator
 
         private static void UpdateForumComments()
         {
-            using (FileStream fs = new FileStream(@"C:\\forump.txt", FileMode.Open))
+            Console.WriteLine("Start UpdateForumComments");
+            using (FileStream fs = new FileStream(path + "forump.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
-                for (int i = 0; i < chars.Length; i++)
+                var limit = chars.Length;
+                if (useLimit)
+                {
+                    limit = maxChars;
+                }
+                for (int i = 0; i < limit; i++)
                 {
                     ForumMessage forumMessage = new ForumMessage();
                     // id

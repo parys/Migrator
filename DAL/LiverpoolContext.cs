@@ -9,7 +9,7 @@ namespace MyLiverpoolSite.DataAccessLayer
     {
 
         public LiverpoolContext()
-            //: base("Data Source=KAPITANCHIKA\\SQLEXPRESS;Initial Catalog=LiverpoolDatabase1;Integrated Security=False;")
+            : base("Data Source=ANDREW;Initial Catalog=LiverpoolDatabase;Integrated Security=False;")
             //: base(@"Data Source=KAPITANCHIKA\SQLEXPRESS;Initial Catalog=LiverpoolDatabase1;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
           //  : base("Data Source=KAPITANCHIKA\\SQLEXPRESS;Initial Catalog=MyLiverpoolSite.DataAccessLayer.LiverpoolContext;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
         {
