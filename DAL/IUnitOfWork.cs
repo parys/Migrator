@@ -1,7 +1,7 @@
-﻿using DAL;
-using DAL.models;
+﻿using DAL.models;
+using MyLiverpoolSite.DataAccessLayer;
 
-namespace MyLiverpoolSite.DataAccessLayer
+namespace DAL
 {
     /// <summary>
     /// Maintains a list of repositories affected by a business transaction and coordinates 
@@ -58,6 +58,11 @@ namespace MyLiverpoolSite.DataAccessLayer
         /// Provides access to review requests repository.
         /// </summary>
         IGenericRepository<ForumMessage> ForumMessageRepository { get; }
+
+        IGenericRepository<Role> RoleRepository { get; }
+        IGenericRepository<RoleClaim> RoleClaimRepository { get; }
+        IGenericRepository<UserClaim> UserClaimRepository { get; }
+        IGenericRepository<UserLogin> UserLoginRepository { get; }
 
         /// <summary>
         /// Provides access to room repository.

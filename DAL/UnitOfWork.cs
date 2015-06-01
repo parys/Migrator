@@ -1,8 +1,8 @@
 ﻿using System;
-using DAL;
 using DAL.models;
+using MyLiverpoolSite.DataAccessLayer;
 
-namespace MyLiverpoolSite.DataAccessLayer
+namespace DAL
 {
     /// <summary>
     /// Maintains a list of repositories affected by a business transaction and coordinates 
@@ -10,19 +10,23 @@ namespace MyLiverpoolSite.DataAccessLayer
     /// </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly LiverpoolContext context = new LiverpoolContext();
+        private readonly LiverpoolContext _context = new LiverpoolContext();
 
-        private IGenericRepository<User> userRepository;
-        private IGenericRepository<BlogItem> blogItemRepository;
-        private IGenericRepository<NewsItem> newsItemRepository;
-        private IGenericRepository<BlogCategory> blogCategoryRepository;
-        private IGenericRepository<NewsCategory> newsCategoryRepository;
-        private IGenericRepository<BlogComment> blogCommentRepository;
-        private IGenericRepository<NewsComment> newsCommentRepository;
-        private IGenericRepository<ForumSection> forumSectionRepository;
-        private IGenericRepository<ForumTheme> forumThemeRepository;
-        private IGenericRepository<ForumSubsection> forumSubsectionRepository;
-        private IGenericRepository<ForumMessage> forumMessageRepository;
+        private IGenericRepository<User> _userRepository;
+        private IGenericRepository<BlogItem> _blogItemRepository;
+        private IGenericRepository<NewsItem> _newsItemRepository;
+        private IGenericRepository<BlogCategory> _blogCategoryRepository;
+        private IGenericRepository<NewsCategory> _newsCategoryRepository;
+        private IGenericRepository<BlogComment> _blogCommentRepository;
+        private IGenericRepository<NewsComment> _newsCommentRepository;
+        private IGenericRepository<ForumSection> _forumSectionRepository;
+        private IGenericRepository<ForumTheme> _forumThemeRepository;
+        private IGenericRepository<ForumSubsection> _forumSubsectionRepository;
+        private IGenericRepository<ForumMessage> _forumMessageRepository;
+        private IGenericRepository<Role> _roleRepository;
+        private IGenericRepository<RoleClaim> _roleClaimRepository;
+        private IGenericRepository<UserLogin> _userLoginRepository;
+        private IGenericRepository<UserClaim> _userClaimRepository;
       //  private IGenericRepository<Room> roomRepository;
       //  private IGenericRepository<Workplace> workplaceRepository;
       //  private IGenericRepository<StatisticsItem> statisticsItemRepository;
@@ -34,7 +38,7 @@ namespace MyLiverpoolSite.DataAccessLayer
         /// </summary>
         public IGenericRepository<User> UserRepository
         {
-            get { return userRepository ?? (userRepository = new GenericRepository<User>(context)); }
+            get { return _userRepository ?? (_userRepository = new GenericRepository<User>(_context)); }
         }
 
         /// <summary>
@@ -43,8 +47,8 @@ namespace MyLiverpoolSite.DataAccessLayer
         public IGenericRepository<BlogItem> BlogItemRepository
         {
             get {
-                return blogItemRepository ??
-                       (blogItemRepository = new GenericRepository<BlogItem>(context));
+                return _blogItemRepository ??
+                       (_blogItemRepository = new GenericRepository<BlogItem>(_context));
             }
         }
 
@@ -52,8 +56,8 @@ namespace MyLiverpoolSite.DataAccessLayer
         {
             get
             {
-                return blogCategoryRepository ??
-                       (blogCategoryRepository = new GenericRepository<BlogCategory>(context));
+                return _blogCategoryRepository ??
+                       (_blogCategoryRepository = new GenericRepository<BlogCategory>(_context));
             }
         }
 
@@ -61,8 +65,8 @@ namespace MyLiverpoolSite.DataAccessLayer
         {
             get
             {
-                return newsCategoryRepository ??
-                       (newsCategoryRepository = new GenericRepository<NewsCategory>(context));
+                return _newsCategoryRepository ??
+                       (_newsCategoryRepository = new GenericRepository<NewsCategory>(_context));
             }
         }
 
@@ -71,35 +75,51 @@ namespace MyLiverpoolSite.DataAccessLayer
         /// </summary>
         public IGenericRepository<NewsItem> NewsItemRepository
         {
-            get { return newsItemRepository ?? (newsItemRepository = new GenericRepository<NewsItem>(context)); }
+            get { return _newsItemRepository ?? (_newsItemRepository = new GenericRepository<NewsItem>(_context)); }
         }
 
         public IGenericRepository<BlogComment> BlogCommentRepository
         {
-            get { return blogCommentRepository ?? (blogCommentRepository = new GenericRepository<BlogComment>(context)); }
+            get { return _blogCommentRepository ?? (_blogCommentRepository = new GenericRepository<BlogComment>(_context)); }
         }
         public IGenericRepository<NewsComment> NewsCommentRepository
         {
-            get { return newsCommentRepository ?? (newsCommentRepository = new GenericRepository<NewsComment>(context)); }
+            get { return _newsCommentRepository ?? (_newsCommentRepository = new GenericRepository<NewsComment>(_context)); }
         }
 
 
         public IGenericRepository<ForumSection> ForumSectionRepository
         {
-            get { return forumSectionRepository ?? (forumSectionRepository = new GenericRepository<ForumSection>(context)); }
+            get { return _forumSectionRepository ?? (_forumSectionRepository = new GenericRepository<ForumSection>(_context)); }
         }
         
         public IGenericRepository<ForumTheme> ForumThemeRepository
         {
-            get { return forumThemeRepository ?? (forumThemeRepository = new GenericRepository<ForumTheme>(context)); }
+            get { return _forumThemeRepository ?? (_forumThemeRepository = new GenericRepository<ForumTheme>(_context)); }
         }
         public IGenericRepository<ForumSubsection> ForumSubsectionRepository
         {
-            get { return forumSubsectionRepository ?? (forumSubsectionRepository = new GenericRepository<ForumSubsection>(context)); }
+            get { return _forumSubsectionRepository ?? (_forumSubsectionRepository = new GenericRepository<ForumSubsection>(_context)); }
         }
         public IGenericRepository<ForumMessage> ForumMessageRepository
         {
-            get { return forumMessageRepository ?? (forumMessageRepository = new GenericRepository<ForumMessage>(context)); }
+            get { return _forumMessageRepository ?? (_forumMessageRepository = new GenericRepository<ForumMessage>(_context)); }
+        }
+        public IGenericRepository<Role> RoleRepository
+        {
+            get { return _roleRepository ?? (_roleRepository = new GenericRepository<Role>(_context)); }
+        }
+        public IGenericRepository<RoleClaim> RoleClaimRepository
+        {
+            get { return _roleClaimRepository ?? (_roleClaimRepository = new GenericRepository<RoleClaim>(_context)); }
+        }
+        public IGenericRepository<UserLogin> UserLoginRepository
+        {
+            get { return _userLoginRepository ?? (_userLoginRepository = new GenericRepository<UserLogin>(_context)); }
+        }
+        public IGenericRepository<UserClaim> UserClaimRepository
+        {
+            get { return _userClaimRepository ?? (_userClaimRepository = new GenericRepository<UserClaim>(_context)); }
         }
 
         /// <summary>
@@ -107,21 +127,21 @@ namespace MyLiverpoolSite.DataAccessLayer
         /// </summary>
         public void Save()
         {
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
-        private bool disposed;
+        private bool _disposed;
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!_disposed)
             {
                 if (disposing)
                 {
-                    context.Dispose();
+                    _context.Dispose();
                 }
             }
-            disposed = true;
+            _disposed = true;
         }
 
         /// <summary>

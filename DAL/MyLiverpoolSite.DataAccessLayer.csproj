@@ -83,6 +83,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="models\Role.cs" />
+    <Compile Include="models\RoleClaim.cs" />
+    <Compile Include="models\UserClaim.cs" />
+    <Compile Include="models\UserLogin.cs" />
     <Compile Include="models\BlogCategory.cs" />
     <Compile Include="models\BlogItem.cs" />
     <Compile Include="GenericRepository.cs" />

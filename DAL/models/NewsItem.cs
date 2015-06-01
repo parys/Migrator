@@ -4,13 +4,18 @@ namespace DAL.models
 {
     public class NewsItem
     {
+        public NewsItem()
+        {
+            this.Comments = new HashSet<NewsComment>();
+        }
+
         public int Id { get; set; }
 
         public int OldId { get; set; }
 
         public int CategoryId { get; set; }
 
-        public NewsCategory NewsCategory { get; set; }
+        public virtual NewsCategory NewsCategory { get; set; }
 
         public int Year { get; set; }
 
@@ -28,7 +33,7 @@ namespace DAL.models
 
         public int NumberCommentaries { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public string Title { get; set; }
 
@@ -50,6 +55,6 @@ namespace DAL.models
 
         public long LastModifiedUTC { get; set; }
 
-        public List<NewsComment> Comments { get; set; } 
+        public virtual ICollection<NewsComment> Comments { get; set; } 
     }
 }

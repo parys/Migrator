@@ -1,13 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Policy;
-using DAL.models;
 
-namespace DAL
+namespace DAL.models
 {
-    public class User
+    public partial class User
     {
-        public int Id { get; set; }
+        public User()
+        {
+            this.UserClaims = new HashSet<UserClaim>();
+            this.UserLogins = new HashSet<UserLogin>();
+            this.Roles = new HashSet<Role>();
+            this.ForumMessages = new HashSet<ForumMessage>();
+            this.BlogComments = new HashSet<BlogComment>();
+            this.NewsComments = new HashSet<NewsComment>();
+
+        }
+
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
+        public string PhoneNumber { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public bool LockoutEnabled { get; set; }
+        public int AccessFailedCount { get; set; }
+        public string UserName { get; set; }
+
+        public virtual ICollection<UserClaim> UserClaims { get; set; }
+        public virtual ICollection<UserLogin> UserLogins { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
+
+
+
+       // public int Id { get; set; }
 
         public int OldId { get; set; }
 
@@ -21,7 +49,7 @@ namespace DAL
 
         public bool Gender { get; set; }
 
-        public string Email { get; set; }
+       // public string Email { get; set; }
 
         public string Homepage { get; set; }
 
@@ -43,11 +71,11 @@ namespace DAL
 
         public string Title { get; set; }
 
-        public List<ForumMessage> ForumMessages { get; set; }
+        public virtual ICollection<ForumMessage> ForumMessages { get; set; }
 
-        public List<BlogComment> BlogComments { get; set; }
+        public virtual ICollection<BlogComment> BlogComments { get; set; }
 
-        public List<NewsComment> NewsComments { get; set; }
+        public virtual ICollection<NewsComment> NewsComments { get; set; }
 
     }
 }

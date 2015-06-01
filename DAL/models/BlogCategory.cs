@@ -4,6 +4,11 @@ namespace DAL.models
 {
     public class BlogCategory
     {
+        public BlogCategory()
+        {
+            this.BlogItems = new HashSet<BlogItem>();
+        }
+
         public int Id { get; set; }
 
         public int OldId { get; set; }
@@ -18,6 +23,6 @@ namespace DAL.models
 
         public string UrlPath { get; set; }
 
-        public List<BlogItem> BlogItems { get; set; }
+        public virtual ICollection<BlogItem> BlogItems { get; set; }
     }
 }

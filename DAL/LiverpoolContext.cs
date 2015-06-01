@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Linq;
 using DAL;
 using DAL.models;
 
@@ -9,14 +11,13 @@ namespace MyLiverpoolSite.DataAccessLayer
     {
 
         public LiverpoolContext()
-            : base("Data Source=ANDREW;Initial Catalog=LiverpoolDatabase;Integrated Security=False;")
+            : base("Data Source=(localdb)\\ProjectsV12;Initial Catalog=LiverpoolDatabase;Integrated Security=False;")
             //: base(@"Data Source=KAPITANCHIKA\SQLEXPRESS;Initial Catalog=LiverpoolDatabase1;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
           //  : base("Data Source=KAPITANCHIKA\\SQLEXPRESS;Initial Catalog=MyLiverpoolSite.DataAccessLayer.LiverpoolContext;Integrated Security=False;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False")
         {
            // Database.SetInitializer<LiverpoolContext>(null);
             Database.SetInitializer(new DatabaseInitializer());
         }
-
 
         public DbSet<User> Users { get; set; }
 
@@ -38,6 +39,14 @@ namespace MyLiverpoolSite.DataAccessLayer
 
         public DbSet<ForumMessage> ForumMessages { get; set; }
 
+        public DbSet<Role> Roles { get; set; }
+
+        public DbSet<RoleClaim> RoleClaims { get; set; }
+
+        public DbSet<UserClaim> UserClaims { get; set; }
+
+        public DbSet<UserLogin> UserLogins { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<BlogCategory>().HasMany(blogCategory => blogCategory.BlogItems).WithRequired();
@@ -52,5 +61,30 @@ namespace MyLiverpoolSite.DataAccessLayer
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public override int SaveChanges()
+        {
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                // Retrieve the error messages as a list of strings.
+                var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                // Join the list to a single string.
+                var fullErrorMessage = string.Join("; ", errorMessages);
+
+                // Combine the original exception message with the new one.
+                var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                // Throw a new DbEntityValidationException with the improved exception message.
+                throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+            }
+        }
+
     }
 }

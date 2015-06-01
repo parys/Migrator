@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
-using DAL.models;
 
-namespace DAL
+namespace DAL.models
 {
     public class BlogItem
     {
+        public BlogItem()
+        {
+            this.Comments = new HashSet<BlogComment>();
+        }
+
         public int Id { get; set; }
 
         public int OldId { get; set; }
 
         public int CategoryId { get; set; }
 
-        public BlogCategory BlogCategory { get; set; }
+        public virtual BlogCategory BlogCategory { get; set; }
 
         public int Year { get; set; }
 
@@ -29,7 +33,7 @@ namespace DAL
 
         public int NumberCommentaries { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public string Title { get; set; }
 
@@ -51,6 +55,6 @@ namespace DAL
 
         public long LastModifiedUTC { get; set; }
 
-        public List<BlogComment> Comments { get; set; } 
+        public virtual ICollection<BlogComment> Comments { get; set; } 
     }
 }

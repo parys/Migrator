@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace DAL.models
 {
     public class ForumSubsection
     {
+        public ForumSubsection()
+        {
+            this.ForumThemes = new HashSet<ForumTheme>();
+        }
+
         public long Id { get; set; }
 
         public long IdOld { get; set; }
 
         public long SectionId { get; set; }
 
-        public ForumSection ForumSection { get; set; }
+        public virtual ForumSection ForumSection { get; set; }
 
         public string Name { get; set; }
 
@@ -28,7 +29,7 @@ namespace DAL.models
 
         public int Views { get; set; }
 
-        public List<ForumTheme> ForumThemes { get; set; }
+        public virtual ICollection<ForumTheme> ForumThemes { get; set; }
 
       //  public long LastMessageAdditionTime { get; set; }
 

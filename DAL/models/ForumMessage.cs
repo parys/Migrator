@@ -8,7 +8,7 @@
 
         public int ThemeId { get; set; }
 
-        public ForumTheme ForumTheme { get; set; }
+        public virtual ForumTheme ForumTheme { get; set; }
 
         public long AdditionTimeUTC { get; set; }
 
@@ -16,12 +16,10 @@
 
         public string Message { get; set; }
 
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
         public string Ip { get; set; }
 
         public long LastModifiedTimeUTC { get; set; }
-
-        
     }
 }

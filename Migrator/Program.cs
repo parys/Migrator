@@ -105,13 +105,16 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
                 for (int i = 0; i < limit; i++)
                 {
-                    User user = new User();
+                    User user = new User()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                    };
                     // login
                     while (chars[i] != '|')
                     {
@@ -330,7 +333,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -622,14 +625,14 @@ namespace Migrator
         private static void UpdateNewsItems()
         {
             Console.WriteLine("Start UpdateNewsItems");
-            using (FileStream fs = new FileStream(@"C:\news.txt", FileMode.Open))
+            using (FileStream fs = new FileStream(path + "news.txt", FileMode.Open))
             {
                 byte[] data = new byte[fs.Length];
                 fs.Read(data, 0, Convert.ToInt32(fs.Length));
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -928,7 +931,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -1000,7 +1003,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -1071,7 +1074,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -1257,7 +1260,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -1395,7 +1398,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -1519,7 +1522,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)
                 {
                     limit = maxChars;
                 }
@@ -1542,7 +1545,7 @@ namespace Migrator
                         i++;
                     }
                     i++;
-                    User user = UnitOfWork.UserRepository.Get(u => u.Login == userLogin).First();
+                    User user = UnitOfWork.UserRepository.Get(u => u.Login == userLogin).FirstOrDefault();
                     if (user != null)
                     {
                         user.OldId = int.Parse(id);
@@ -1569,7 +1572,7 @@ namespace Migrator
 
                 char[] chars = Encoding.UTF8.GetString(data).ToCharArray();
                 var limit = chars.Length;
-                if (useLimit)
+                if (useLimit && maxChars < chars.Length)                
                 {
                     limit = maxChars;
                 }

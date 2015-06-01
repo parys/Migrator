@@ -4,13 +4,18 @@ namespace DAL.models
 {
     public class ForumTheme
     {
+        public ForumTheme()
+        {
+            this.ForumMessages = new HashSet<ForumMessage>();
+        }
+
         public long Id { get; set; }
 
         public long IdOld { get; set; }
 
         public long SectionId { get; set; }
 
-        public ForumSubsection ForumSubsection { get; set; }
+        public virtual ForumSubsection ForumSubsection { get; set; }
 
         public bool IsPool { get; set; }
 
@@ -28,10 +33,10 @@ namespace DAL.models
 
         public string Description { get; set; }
 
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
-        public User LastAnswerUser { get; set; }
+        public virtual User LastAnswerUser { get; set; }
 
-        public List<ForumMessage> ForumMessages { get; set; }
+        public virtual ICollection<ForumMessage> ForumMessages { get; set; }
     }
 }

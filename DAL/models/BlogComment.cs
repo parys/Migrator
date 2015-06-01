@@ -4,6 +4,11 @@ namespace DAL.models
 {
     public class BlogComment
     {
+        public BlogComment()
+        {
+            this.Comments = new HashSet<BlogComment>();   
+        }
+
         public long Id { get; set; }
 
         public int OldId { get; set; }
@@ -14,16 +19,16 @@ namespace DAL.models
 
         public long AdditionTime { get; set; }
 
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
         public string Message { get; set; }
 
         public string Answer { get; set; }
 
-        public List<BlogComment> Comments { get; set; } 
+        public virtual ICollection<BlogComment> Comments { get; set; } 
 
         public long ParentCommentId { get; set; }
 
-        public BlogItem BlogItem { get; set; }
+        public virtual BlogItem BlogItem { get; set; }
     }
 }
