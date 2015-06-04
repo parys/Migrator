@@ -47,6 +47,8 @@ namespace MyLiverpoolSite.DataAccessLayer
 
         public DbSet<UserLogin> UserLogins { get; set; }
 
+        public DbSet<UserRole> UserRoles { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<BlogCategory>().HasMany(blogCategory => blogCategory.BlogItems).WithRequired();

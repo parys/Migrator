@@ -113,7 +113,7 @@ namespace Migrator
                 {
                     User user = new User()
                     {
-                        Id = Guid.NewGuid().ToString(),
+                        //Id = Guid.NewGuid().ToString(),
                     };
                     // login
                     while (chars[i] != '|')

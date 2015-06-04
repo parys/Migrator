@@ -3,20 +3,19 @@ using System.Collections.Generic;
 
 namespace DAL.models
 {
-    public partial class User
+    public partial class User //: IdentityUser
     {
         public User()
         {
-            this.UserClaims = new HashSet<UserClaim>();
-            this.UserLogins = new HashSet<UserLogin>();
+            this.Claims = new HashSet<UserClaim>();
+            this.Logins = new HashSet<UserLogin>();
             this.Roles = new HashSet<Role>();
             this.ForumMessages = new HashSet<ForumMessage>();
             this.BlogComments = new HashSet<BlogComment>();
             this.NewsComments = new HashSet<NewsComment>();
-
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public string PasswordHash { get; set; }
@@ -24,18 +23,21 @@ namespace DAL.models
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public bool TwoFactorEnabled { get; set; }
-        public Nullable<System.DateTime> LockoutEndDateUtc { get; set; }
+        public DateTime? LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         public string UserName { get; set; }
+        public string ConcurrencyStamp { get; set; }
+        public string NormalizedEmail { get; set; }
+        public string NormalizedUserName { get; set; }
 
-        public virtual ICollection<UserClaim> UserClaims { get; set; }
-        public virtual ICollection<UserLogin> UserLogins { get; set; }
+        public virtual ICollection<UserClaim> Claims { get; set; }
+        public virtual ICollection<UserLogin> Logins { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
 
 
 
-       // public int Id { get; set; }
+        // public int Id { get; set; }
 
         public int OldId { get; set; }
 
@@ -49,7 +51,7 @@ namespace DAL.models
 
         public bool Gender { get; set; }
 
-       // public string Email { get; set; }
+        // public string Email { get; set; }
 
         public string Homepage { get; set; }
 
